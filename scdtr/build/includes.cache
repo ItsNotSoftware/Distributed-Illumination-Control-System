@@ -1,0 +1,37 @@
+[
+  {
+    "Sourcefile": null,
+    "Include": "",
+    "Includepath": "/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040"
+  },
+  {
+    "Sourcefile": null,
+    "Include": "",
+    "Includepath": "/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/variants/rpipico"
+  },
+  {
+    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/scdtr.ino.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/communication.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/led.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/luxmeter.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/thread_safe_fifo.cpp",
+    "Include": "",
+    "Includepath": null
+  }
+]
