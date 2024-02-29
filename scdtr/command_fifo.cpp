@@ -25,10 +25,8 @@ bool CommandFifo::pop(Command& item) {
         q.pop();
 
         mutex_exit(&mtx);
-    } else {
-        Serial.println("[Mutex Error]: Timeout popping item");
-        return false;
+        return true;
     }
 
-    return true;
+    return false;
 }

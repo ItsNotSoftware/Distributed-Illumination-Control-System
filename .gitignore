@@ -1,4 +1,5 @@
 /scdtr/build/
 /build/
+/plots/
 .DS_Store
 .vscode

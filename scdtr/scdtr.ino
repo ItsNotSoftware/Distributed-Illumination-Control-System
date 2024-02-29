@@ -14,15 +14,18 @@ constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;    // ms
 
 Luxmeter luxmeter(A0);
 LED led(15);
-CommandFifo fifo;
-Command cmd;
+
+// FIFOs for IPC
+CommandFifo fifo0;  // FIFO for core #0
+CommandFifo fifo1;  // FIFO for core #1
+
+Command cmd0;
+Command cmd1;
 
 uint8_t id = 0;
 uint32_t curr_time = 0;
 uint32_t prev_controller_t = 0;
 uint32_t prev_adc_t = 0;
-
-float l = 0;
 
 void setup() {
     Serial.begin(115200);
@@ -43,18 +46,12 @@ void setup1() {}
 
 /**
  * [Core #0 loop]:
- *  - LDR measurments.
- *  - Luminosity controller.
- *  - LED actuation.
- *
- * @note This loop is executed at a fixed rate (LOOP_PERIOD).
+ *     Task1 -> Contorller (100Hz).
+ *     Task2 -> ADC sampling (1kHz).
+ *     Task3 -> Command handling (if fifo has a command).
  */
 void loop() {
     curr_time = millis();
-
-    if (fifo.pop(cmd)) {
-        command_handle(cmd);
-    }
 
     // Task 1: Controller
     if (curr_time - prev_controller_t >= CONTROLLER_INTERVAL) {
@@ -68,12 +65,16 @@ void loop() {
         luxmeter.sample();
     }
 
+    // Task 3: Command handling
+    if (fifo0.pop(cmd0)) {
+        command_handle(cmd0);
+    }
+
     watchdog_update();
 }
 
 /**
  * [Core #1 loop]:
- *  - Serial communication.
- *  - CAN communication.
+ *      Task1 -> Serial communication (if msg is recived).
  */
 void loop1() { SerialCom::read(); }
