@@ -5,12 +5,21 @@ import sys
 import threading
 from colorama import Fore, Style, init
 from termcolor import colored
+import time
+
 
 # Print options
 ERROR = True
 WARNINGS = True
 INFO = True
 VALUES = False
+
+
+START_TIME = int(round(time.time() * 1000))
+
+
+def get_time_ms():
+    return str(int(round(time.time() * 1000)) - START_TIME)
 
 
 class Interface:
@@ -23,19 +32,33 @@ class Interface:
         self.receive_thread.start()
         self.values = {}
 
+        self.info_file = open("logs/info.log", "w")
+        self.warning_file = open("logs/warning.log", "w")
+        self.error_file = open("logs/error.log", "w")
+
     def read_serial(self):
         while True:
             data = self.port.readline().decode().replace("\n", "")
             words = data.split()
 
-            if len(words) == 0:
-                continue
-            if words[0] == "[INFO]:" and INFO:
-                print(colored(data, "green"))
-            elif words[0] == "[WARNING]:" and WARNINGS:
-                print(colored(data, "yellow"))
-            elif words[0] == "[ERROR]:" and ERROR:
-                print(colored(data, "red"))
+            if words[0] == "[INFO]:":
+                self.info_file.write(data.replace("INFO", get_time_ms()) + "\n")
+
+                if INFO:
+                    print(colored(data, "green"))
+
+            elif words[0] == "[WARNING]:":
+                self.warning_file.write(data.replace("WARNING", get_time_ms()) + "\n")
+
+                if WARNINGS:
+                    print(colored(data, "yellow"))
+
+            elif words[0] == "[ERROR]:":
+                self.error_file.write(data.replace("ERROR", get_time_ms()) + "\n")
+
+                if ERROR:
+                    print(colored(data, "red"))
+
             elif words[0] == "[VALUE]:":
                 if words[1] in self.values:
                     self.values[words[1]].append(words[2])
@@ -44,6 +67,9 @@ class Interface:
 
                 if VALUES:
                     print("\t", data)
+
+            else:
+                print(data)
 
     def send_message(self, message):
         self.port.write(message.encode())
@@ -67,7 +93,11 @@ class Interface:
     def on_exit(self):
         self.port.close()
         self.gen_plots()
-        print("\n", self.values)
+
+        self.info_file.close()
+        self.warning_file.close()
+        self.error_file.close()
+        exit()
 
 
 def main(interface):

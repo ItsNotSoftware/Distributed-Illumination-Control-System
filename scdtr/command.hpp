@@ -31,6 +31,7 @@ struct ContollerCmd {
 struct MonitorCmd {
     Request request;
     TargetM monitor;
+    char variable;
 };
 
 typedef std::variant<LuminaireCmd, ContollerCmd, MonitorCmd> Command;

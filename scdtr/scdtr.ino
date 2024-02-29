@@ -30,6 +30,7 @@ uint32_t prev_adc_t = 0;
 void setup() {
     Serial.begin(115200);
     pinMode(PICO_DEFAULT_LED_PIN, OUTPUT);  // Error LED
+    delay(100);
     digitalWrite(PICO_DEFAULT_LED_PIN, LOW);
     delay(100);
 

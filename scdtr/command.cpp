@@ -12,6 +12,8 @@ void command_handle(Command &cmd) {
         LOGGER_SEND_INFO("Luminaire command received");
     } else if (std::holds_alternative<ContollerCmd>(cmd)) {
         LOGGER_SEND_INFO("Controller command received");
+    } else if (std::holds_alternative<MonitorCmd>(cmd)) {
+        LOGGER_SEND_INFO("Monitor command received");
     } else {
         LOGGER_SEND_ERROR("Unknown command received");
     }
