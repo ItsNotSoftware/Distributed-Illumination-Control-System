@@ -1,5 +1,5 @@
 {
-  "additionalFiles": "../../..,../../..,../../..,../..,../..,../..,../..,../..,../..,../..,../..,../..",
+  "additionalFiles": "../../..,../../..,../../..,../..,../..,../..,../..,../..,../..,../..,../..,../..,../..",
   "builtInToolsFolders": "",
   "compiler.optimization_flags": "",
   "customBuildProperties": "",
@@ -7,5 +7,5 @@
   "hardwareFolders": "/Users/diogoferreira/Library/Arduino15/packages",
   "otherLibrariesFolders": "/Users/diogoferreira/Documents/Arduino/libraries",
   "runtime.ide.version": "10607",
-  "sketchLocation": "/Users/diogoferreira/CodeWs/scdtr"
+  "sketchLocation": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr"
 }

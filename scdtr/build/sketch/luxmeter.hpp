@@ -1,4 +1,4 @@
-#line 1 "/Users/diogoferreira/CodeWs/scdtr/luxmeter.hpp"
+#line 1 "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/luxmeter.hpp"
 #ifndef LUXMETER_HPP
 #define LUXMETER_HPP
 
@@ -9,7 +9,7 @@
 #include <numeric>
 
 constexpr uint16_t ADC_RANGE = 4096;
-constexpr uint16_t N_AVG_POINTS = 8;  // number of points in running average
+constexpr uint16_t N_AVG_POINTS = 16;  // number of points in running average
 
 // LDR voltage to lux conversion parameters
 constexpr float m = -0.8;

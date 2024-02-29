@@ -1,6 +1,6 @@
-/Users/diogoferreira/CodeWs/scdtr/build/sketch/communication.cpp.o: \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/communication.cpp \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/communication.hpp \
+/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/communication.cpp.o: \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/communication.cpp \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/communication.hpp \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/Arduino.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/stdlib_noniso.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/RP2040Version.h \
@@ -115,4 +115,6 @@
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/uart.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/Bootsel.h \
- /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio.h
+ /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio.h \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command.hpp \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command_fifo.hpp

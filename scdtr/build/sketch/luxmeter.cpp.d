@@ -1,6 +1,6 @@
-/Users/diogoferreira/CodeWs/scdtr/build/sketch/luxmeter.cpp.o: \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/luxmeter.cpp \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/luxmeter.hpp \
+/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/luxmeter.cpp.o: \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/luxmeter.cpp \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/luxmeter.hpp \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/Arduino.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/stdlib_noniso.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/RP2040Version.h \

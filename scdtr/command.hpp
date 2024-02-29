@@ -5,7 +5,7 @@
 
 enum class Request { SET_VAL, GET_VAL, SET_REF, GET_REF, START, STOP };
 enum class Unit { DC, LUX };
-enum class Gain { KD, KP, KI };
+enum class Target { KD, KP, KI, ANTI_WINDUP, FEEDBACK };
 
 struct LuminaireCmd {
     Request request;
@@ -13,11 +13,14 @@ struct LuminaireCmd {
     float value;
 };
 
-struct OcuppancyCmd {
+struct ContollerCmd {
     Request request;
-    bool value;
+    Target target;
+    float value;
 };
 
-typedef std::variant<LuminaireCmd, OcuppancyCmd> Command;
+typedef std::variant<LuminaireCmd, ContollerCmd> Command;
+
+void command_handle(Command &command);
 
 #endif

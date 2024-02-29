@@ -1,4 +1,4 @@
-#line 1 "/Users/diogoferreira/CodeWs/scdtr/led.cpp"
+#line 1 "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/led.cpp"
 #include "led.hpp"
 
 LED::LED(uint8_t pin) : pin(pin) {

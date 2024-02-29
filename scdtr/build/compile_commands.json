@@ -1,10 +1,10 @@
 [
  {
-  "directory": "/Users/diogoferreira/CodeWs/scdtr",
+  "directory": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr",
   "arguments": [
    "/Users/diogoferreira/Library/Arduino15/packages/rp2040/tools/pqt-gcc/2.2.0-d04e724/bin/arm-none-eabi-g++",
    "-I",
-   "/Users/diogoferreira/CodeWs/scdtr/build/core",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/core",
    "-c",
    "-Werror=return-type",
    "-Wno-psabi",
@@ -48,18 +48,18 @@
    "-DWIFICC=CYW43_COUNTRY_WORLDWIDE",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/variants/rpipico",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/luxmeter.cpp",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command.cpp",
    "-o",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/luxmeter.cpp.o"
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command.cpp.o"
   ],
-  "file": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/luxmeter.cpp"
+  "file": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command.cpp"
  },
  {
-  "directory": "/Users/diogoferreira/CodeWs/scdtr",
+  "directory": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr",
   "arguments": [
    "/Users/diogoferreira/Library/Arduino15/packages/rp2040/tools/pqt-gcc/2.2.0-d04e724/bin/arm-none-eabi-g++",
    "-I",
-   "/Users/diogoferreira/CodeWs/scdtr/build/core",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/core",
    "-c",
    "-Werror=return-type",
    "-Wno-psabi",
@@ -103,18 +103,18 @@
    "-DWIFICC=CYW43_COUNTRY_WORLDWIDE",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/variants/rpipico",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/led.cpp",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/scdtr.ino.cpp",
    "-o",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/led.cpp.o"
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/scdtr.ino.cpp.o"
   ],
-  "file": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/led.cpp"
+  "file": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/scdtr.ino.cpp"
  },
  {
-  "directory": "/Users/diogoferreira/CodeWs/scdtr",
+  "directory": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr",
   "arguments": [
    "/Users/diogoferreira/Library/Arduino15/packages/rp2040/tools/pqt-gcc/2.2.0-d04e724/bin/arm-none-eabi-g++",
    "-I",
-   "/Users/diogoferreira/CodeWs/scdtr/build/core",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/core",
    "-c",
    "-Werror=return-type",
    "-Wno-psabi",
@@ -158,18 +158,18 @@
    "-DWIFICC=CYW43_COUNTRY_WORLDWIDE",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/variants/rpipico",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/scdtr.ino.cpp",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/luxmeter.cpp",
    "-o",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/scdtr.ino.cpp.o"
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/luxmeter.cpp.o"
   ],
-  "file": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/scdtr.ino.cpp"
+  "file": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/luxmeter.cpp"
  },
  {
-  "directory": "/Users/diogoferreira/CodeWs/scdtr",
+  "directory": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr",
   "arguments": [
    "/Users/diogoferreira/Library/Arduino15/packages/rp2040/tools/pqt-gcc/2.2.0-d04e724/bin/arm-none-eabi-g++",
    "-I",
-   "/Users/diogoferreira/CodeWs/scdtr/build/core",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/core",
    "-c",
    "-Werror=return-type",
    "-Wno-psabi",
@@ -213,18 +213,18 @@
    "-DWIFICC=CYW43_COUNTRY_WORLDWIDE",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/variants/rpipico",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/thread_safe_fifo.cpp",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/led.cpp",
    "-o",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/thread_safe_fifo.cpp.o"
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/led.cpp.o"
   ],
-  "file": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/thread_safe_fifo.cpp"
+  "file": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/led.cpp"
  },
  {
-  "directory": "/Users/diogoferreira/CodeWs/scdtr",
+  "directory": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr",
   "arguments": [
    "/Users/diogoferreira/Library/Arduino15/packages/rp2040/tools/pqt-gcc/2.2.0-d04e724/bin/arm-none-eabi-g++",
    "-I",
-   "/Users/diogoferreira/CodeWs/scdtr/build/core",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/core",
    "-c",
    "-Werror=return-type",
    "-Wno-psabi",
@@ -268,10 +268,65 @@
    "-DWIFICC=CYW43_COUNTRY_WORLDWIDE",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040",
    "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/variants/rpipico",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/communication.cpp",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/communication.cpp",
    "-o",
-   "/Users/diogoferreira/CodeWs/scdtr/build/sketch/communication.cpp.o"
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/communication.cpp.o"
   ],
-  "file": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/communication.cpp"
+  "file": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/communication.cpp"
+ },
+ {
+  "directory": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr",
+  "arguments": [
+   "/Users/diogoferreira/Library/Arduino15/packages/rp2040/tools/pqt-gcc/2.2.0-d04e724/bin/arm-none-eabi-g++",
+   "-I",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/core",
+   "-c",
+   "-Werror=return-type",
+   "-Wno-psabi",
+   "-DCFG_TUSB_MCU=OPT_MCU_RP2040",
+   "-DUSBD_PID=0x000a",
+   "-DUSBD_VID=0x2e8a",
+   "-DUSBD_MAX_POWER_MA=250",
+   "-DUSB_MANUFACTURER=\"Raspberry Pi\"",
+   "-DUSB_PRODUCT=\"Pico\"",
+   "-DPICO_CYW43_ARCH_THREADSAFE_BACKGROUND=1",
+   "-DCYW43_LWIP=1",
+   "-DLWIP_IPV6=0",
+   "-DLWIP_IPV4=1",
+   "-DLWIP_IGMP=1",
+   "-DLWIP_CHECKSUM_CTRL_PER_NETIF=1",
+   "-DARDUINO_VARIANT=\"rpipico\"",
+   "-DTARGET_RP2040",
+   "-DPICO_FLASH_SIZE_BYTES=2097152",
+   "-march=armv6-m",
+   "-mcpu=cortex-m0plus",
+   "-mthumb",
+   "-ffunction-sections",
+   "-fdata-sections",
+   "-fno-exceptions",
+   "-DARM_MATH_CM0_FAMILY",
+   "-DARM_MATH_CM0_PLUS",
+   "-MMD",
+   "-iprefix/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/",
+   "@/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/lib/platform_inc.txt",
+   "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/include",
+   "-fno-rtti",
+   "-std=gnu++17",
+   "-g",
+   "-pipe",
+   "-DF_CPU=133000000L",
+   "-DARDUINO=10607",
+   "-DARDUINO_RASPBERRY_PI_PICO",
+   "-DBOARD_NAME=\"RASPBERRY_PI_PICO\"",
+   "-DARDUINO_ARCH_RP2040",
+   "-Os",
+   "-DWIFICC=CYW43_COUNTRY_WORLDWIDE",
+   "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040",
+   "-I/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/variants/rpipico",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command_fifo.cpp",
+   "-o",
+   "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command_fifo.cpp.o"
+  ],
+  "file": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command_fifo.cpp"
  }
 ]

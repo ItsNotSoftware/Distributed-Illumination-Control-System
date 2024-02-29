@@ -10,27 +10,32 @@
     "Includepath": "/Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/variants/rpipico"
   },
   {
-    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/scdtr.ino.cpp",
+    "Sourcefile": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/scdtr.ino.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/communication.cpp",
+    "Sourcefile": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/led.cpp",
+    "Sourcefile": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command_fifo.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/luxmeter.cpp",
+    "Sourcefile": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/communication.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "/Users/diogoferreira/CodeWs/scdtr/build/sketch/thread_safe_fifo.cpp",
+    "Sourcefile": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/led.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/luxmeter.cpp",
     "Include": "",
     "Includepath": null
   }

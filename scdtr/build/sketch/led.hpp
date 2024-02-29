@@ -1,4 +1,4 @@
-#line 1 "/Users/diogoferreira/CodeWs/scdtr/led.hpp"
+#line 1 "/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/led.hpp"
 #ifndef LED_HPP
 #define LED_HPP
 

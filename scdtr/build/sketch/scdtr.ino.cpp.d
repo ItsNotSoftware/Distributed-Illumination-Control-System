@@ -1,5 +1,5 @@
-/Users/diogoferreira/CodeWs/scdtr/build/sketch/scdtr.ino.cpp.o: \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/scdtr.ino.cpp \
+/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/scdtr.ino.cpp.o: \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/scdtr.ino.cpp \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/Arduino.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/stdlib_noniso.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/RP2040Version.h \
@@ -115,8 +115,12 @@
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2/cores/rp2040/Bootsel.h \
  /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio.h \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/command.hpp \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/communication.hpp \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/led.hpp \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/luxmeter.hpp \
- /Users/diogoferreira/CodeWs/scdtr/build/sketch/thread_safe_fifo.hpp
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command.hpp \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/command_fifo.hpp \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/communication.hpp \
+ /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/rp2_common/hardware_resets/include/hardware/resets.h \
+ /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/resets.h \
+ /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/resets.h \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/led.hpp \
+ /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/scdtr/build/sketch/luxmeter.hpp \
+ /Users/diogoferreira/Library/Arduino15/packages/rp2040/hardware/rp2040/3.7.2//pico-sdk/src/common/pico_stdlib/include/pico/stdlib.h

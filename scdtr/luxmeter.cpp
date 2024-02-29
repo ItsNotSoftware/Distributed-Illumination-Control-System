@@ -6,8 +6,6 @@ Luxmeter::Luxmeter(uint8_t pin) : pin(pin) {
 }
 
 uint16_t Luxmeter::get_mv() {
-    sample();
-
     // Average
     uint32_t sum = std::accumulate(run_avg.begin(), run_avg.end(), 0);
     uint16_t avg = sum / N_AVG_POINTS;
