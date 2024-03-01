@@ -36,8 +36,16 @@ class LED {
      */
     inline void set_luminosity_percentage(float percentage) { set_duty_cycle(percentage / 100.0); };
 
+    /**
+     * Gets the current duty cycle.
+     *
+     * @return Duty cycle [0,1].
+     */
+    float get_duty_cycle();
+
    private:
     uint8_t pin;  // Pin connected to the LED.
+    float pwm_val;
 };
 
 #endif

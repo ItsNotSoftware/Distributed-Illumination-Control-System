@@ -12,7 +12,7 @@ import time
 ERROR = True
 WARNINGS = True
 INFO = True
-VALUES = False
+VALUES = True
 
 
 START_TIME = int(round(time.time() * 1000))
@@ -40,6 +40,9 @@ class Interface:
         while True:
             data = self.port.readline().decode().replace("\n", "")
             words = data.split()
+
+            if len(words) == 0:
+                continue
 
             if words[0] == "[INFO]:":
                 self.info_file.write(data.replace("INFO", get_time_ms()) + "\n")
@@ -77,9 +80,7 @@ class Interface:
     def gen_plots(self):
         for key, value_list in self.values.items():
             try:
-                numeric_values = [
-                    float(value) for value in value_list
-                ]  # Convert values to float
+                numeric_values = [float(value) for value in value_list]
                 plt.figure()
                 plt.plot(numeric_values)
                 plt.title(key)
@@ -87,6 +88,8 @@ class Interface:
                 plt.ylabel("Value")
                 plt.savefig(f"plots/{key}.png")  # Save the plot as a PNG file
                 plt.close()
+
+                np.save(f"logs/{key}.npy", numeric_values)
             except ValueError as e:
                 print(f"Error converting values for {key}: {e}")
 

@@ -3,26 +3,31 @@
 #include "command.hpp"
 #include "command_fifo.hpp"
 #include "communication.hpp"
+#include "controller.hpp"
 #include "hardware/resets.h"
 #include "hardware/watchdog.h"
 #include "led.hpp"
 #include "luxmeter.hpp"
 #include "pico/stdlib.h"
 
-constexpr uint32_t CONTROLLER_INTERVAL = 500;  // ms
-constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;    // ms
+constexpr uint32_t CONTROLLER_INTERVAL = 10;  // ms
+constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms
 
 Luxmeter luxmeter(A0);
 LED led(15);
+Controller controller(0.0667, 0.0813, 0.011);
 
 // FIFOs for IPC
-CommandFifo fifo0;  // FIFO for core #0
-CommandFifo fifo1;  // FIFO for core #1
+CommandFifo fifo0;  // core #0
+CommandFifo fifo1;  // core #1
 
-Command cmd0;
-Command cmd1;
+// Placeholder for commands
+Command cmd0;  // core #0
+Command cmd1;  // core #1
 
-uint8_t id = 0;
+uint8_t id = 0;  // lumminair id
+
+// Time keeping for schedualing
 uint32_t curr_time = 0;
 uint32_t prev_controller_t = 0;
 uint32_t prev_adc_t = 0;
@@ -57,12 +62,19 @@ void loop() {
     // Task 1: Controller
     if (curr_time - prev_controller_t >= CONTROLLER_INTERVAL) {
         prev_controller_t = curr_time;
-        LOGGER_SEND_VAL("LUX", luxmeter.get_lux());
+
+        float lux = luxmeter.get_lux();
+        float dc = controller.compute_pwm_signal(lux, curr_time);
+        led.set_duty_cycle(dc);
+
+        LOGGER_SEND_VAL("Luminosity", lux);
+        LOGGER_SEND_VAL("DutyCycle", dc);
     }
 
     // Task 2: ADC sampling
     if (curr_time - prev_adc_t >= ADC_SAMPLE_INTERVAL) {
         prev_adc_t = curr_time;  // Update the timeo
+
         luxmeter.sample();
     }
 
@@ -79,3 +91,6 @@ void loop() {
  *      Task1 -> Serial communication (if msg is recived).
  */
 void loop1() { SerialCom::read(); }
+
+// note: a = 15.564501347708887; b = -1.2545202156334199
+// node: response = 820ms
