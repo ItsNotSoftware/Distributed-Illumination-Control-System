@@ -1,5 +1,7 @@
 #include "controller.hpp"
 
+#include "led.hpp"
+
 Controller::Controller(float Kp, float Ki, float Kd, float target)
     : prev_timestamp(0), anti_windup(true), target(target), Kp(Kp), Ki(Ki), Kd(Kd), integral(0) {}
 
@@ -28,8 +30,8 @@ float Controller::compute_pwm_signal(float luminosity, uint32_t current_time) {
 
     // Anti-windup
     if (anti_windup) {
-        if (pwm_signal > 1.0) {
-            pwm_signal = 1.0;
+        if (pwm_signal > DAC_RANGE) {
+            pwm_signal = DAC_RANGE;
             integral -= error * dt;
         } else if (pwm_signal < 0.0) {
             pwm_signal = 0.0;
@@ -37,7 +39,7 @@ float Controller::compute_pwm_signal(float luminosity, uint32_t current_time) {
         }
     } else {
         // clamp the pwm signal
-        pwm_signal = pwm_signal > 1.0 ? 1.0 : pwm_signal < 0.0 ? 0.0 : pwm_signal;
+        pwm_signal = pwm_signal > DAC_RANGE ? DAC_RANGE : pwm_signal < 0.0 ? 0.0 : pwm_signal;
     }
 
     return pwm_signal;
