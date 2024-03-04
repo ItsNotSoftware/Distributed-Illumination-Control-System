@@ -17,6 +17,7 @@ Luxmeter luxmeter(A0);
 LED led(15);
 // Controller controller(0.0667, 0.0813, 0.011, 14);
 Controller controller(0.0082, 0.0313, 0.181, 2.8);
+bool contoller_active = true;
 
 // FIFOs for IPC
 CommandFifo fifo0;  // core #0
@@ -65,8 +66,11 @@ void loop() {
         prev_controller_t = curr_time;
 
         float lux = luxmeter.get_lux();
-        float u = controller.compute_pwm_signal(lux, curr_time);
-        led.set_pwm_range(u);
+
+        if (contoller_active) {
+            float u = controller.compute_pwm_signal(lux, curr_time);
+            led.set_pwm_range(u);
+        }
 
         LOGGER_SEND_VAL("Luminosity", lux);
         LOGGER_SEND_VAL("DutyCycle", u);

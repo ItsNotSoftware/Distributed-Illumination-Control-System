@@ -3,10 +3,9 @@
 
 #include <variant>
 
-enum class Request { SET_VAL, GET_VAL, SET_REF, GET_REF, ON, OFF };
-enum class Unit { DC, LUX };
-enum class Target { KD, KP, KI, ANTI_WINDUP, FEEDBACK, OCCUPANCY };
-enum class TargetM {
+enum class Request { SET, GET, TURN_ON, TURN_OFF };
+enum class Target { KD, KP, KI, REF, DC, LUX, ANTI_WINDUP, FEEDBACK, OCCUPANCY };
+enum class Monitor {
     INST_POWER_COMSUMPTION,
     AVG_POWER_CONSUMPTION,
     TIME_SINSE_RESTART,
@@ -18,23 +17,17 @@ enum class TargetM {
 
 struct LuminaireCmd {
     Request request;
-    Unit unit;
-    float value;
-};
-
-struct ContollerCmd {
-    Request request;
     Target target;
     float value;
 };
 
 struct MonitorCmd {
     Request request;
-    TargetM monitor;
+    Monitor monitor;
     char variable;
 };
 
-typedef std::variant<LuminaireCmd, ContollerCmd, MonitorCmd> Command;
+typedef std::variant<LuminaireCmd, MonitorCmd> Command;
 
 void command_handle(Command &command);
 

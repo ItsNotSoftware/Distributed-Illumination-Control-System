@@ -4,8 +4,11 @@
 #include "command_fifo.hpp"
 
 // Check if lumminair id matches
-#define CHECK_ID(x) \
-    if (std::stoi(x) != id) return
+#define CHECK_ID(x)           \
+    if (std::stoi(x) != id) { \
+        SEND_ERR();           \
+        return;               \
+    }
 
 extern CommandFifo fifo0;
 extern uint8_t id;
@@ -29,7 +32,7 @@ void process_input(std::vector<std::string> &args) {
             CHECK_ID(args[1]);
 
             cmd = LuminaireCmd{
-                .request = Request::SET_VAL, .unit = Unit::DC, .value = std::stof(args[2])};
+                .request = Request::SET, .target = Target::DC, .value = std::stof(args[2])};
             break;
 
         case 'g':  // Getters
@@ -37,71 +40,72 @@ void process_input(std::vector<std::string> &args) {
 
             switch (args[1][0]) {
                 case 'd':  // Duty cycle
-                    cmd = LuminaireCmd{.request = Request::GET_VAL, .unit = Unit::DC, .value = 0};
+                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::DC, .value = 0};
                     break;
 
                 case 'r':  // Reference
-                    cmd = LuminaireCmd{.request = Request::GET_REF, .unit = Unit::LUX, .value = 0};
+                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::REF, .value = 0};
                     break;
 
                 case 'l':  // Luminosity
-                    cmd = LuminaireCmd{.request = Request::GET_VAL, .unit = Unit::LUX, .value = 0};
+                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::LUX, .value = 0};
                     break;
 
                 case 'o':  // Occupancy
-                    cmd = ContollerCmd{
-                        .request = Request::GET_VAL, .target = Target::OCCUPANCY, .value = 0};
+                    cmd = LuminaireCmd{
+                        .request = Request::GET, .target = Target::OCCUPANCY, .value = 0};
                     break;
 
                 case 'a':  // Anti-windup
-                    cmd = ContollerCmd{
-                        .request = Request::GET_VAL, .target = Target::ANTI_WINDUP, .value = 0};
+                    cmd = LuminaireCmd{
+                        .request = Request::GET, .target = Target::ANTI_WINDUP, .value = 0};
                     break;
 
                 case 'k':  // Feedback
-                    cmd = ContollerCmd{
-                        .request = Request::GET_VAL, .target = Target::FEEDBACK, .value = 0};
+                    cmd = LuminaireCmd{
+                        .request = Request::GET, .target = Target::FEEDBACK, .value = 0};
                     break;
 
                 case 'x':  // Instantaneous luminosity
-                    cmd = LuminaireCmd{.request = Request::GET_VAL, .unit = Unit::LUX, .value = 0};
+                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::LUX, .value = 0};
                     break;
 
                 case 'p':  // Instantaneous power consumption
-                    cmd = MonitorCmd{.request = Request::GET_VAL,
-                                     .monitor = TargetM::INST_POWER_COMSUMPTION};
+                    cmd = MonitorCmd{.request = Request::GET,
+                                     .monitor = Monitor::INST_POWER_COMSUMPTION};
                     break;
 
                 case 't':  // Time since restart
-                    cmd = MonitorCmd{.request = Request::GET_VAL,
-                                     .monitor = TargetM::TIME_SINSE_RESTART,
+                    cmd = MonitorCmd{.request = Request::GET,
+                                     .monitor = Monitor::TIME_SINSE_RESTART,
                                      .variable = 0};
                     break;
 
                 case 'b':  // Buffer
                     cmd = MonitorCmd{
-                        .request = Request::GET_VAL, .monitor = TargetM::BUFFER, .variable = 0};
+                        .request = Request::GET, .monitor = Monitor::BUFFER, .variable = 0};
                     break;
 
                 case 'e':  // Avg power consumption
-                    cmd = MonitorCmd{.request = Request::GET_VAL,
-                                     .monitor = TargetM::AVG_POWER_CONSUMPTION,
+                    cmd = MonitorCmd{.request = Request::GET,
+                                     .monitor = Monitor::AVG_POWER_CONSUMPTION,
                                      .variable = 0};
                     break;
 
                 case 'v':  // Avg visibility error
-                    cmd = MonitorCmd{.request = Request::GET_VAL,
-                                     .monitor = TargetM::AVG_VISIBILITY_ERROR,
+                    cmd = MonitorCmd{.request = Request::GET,
+                                     .monitor = Monitor::AVG_VISIBILITY_ERROR,
                                      .variable = 0};
                     break;
 
                 case 'f':  // Avg flicker error
-                    cmd = MonitorCmd{.request = Request::GET_VAL,
-                                     .monitor = TargetM::AVG_FLICKER_ERROR,
+                    cmd = MonitorCmd{.request = Request::GET,
+                                     .monitor = Monitor::AVG_FLICKER_ERROR,
                                      .variable = 0};
                     break;
 
                 default:
+                    SEND_ERR();
                     LOGGER_SEND_ERROR("Invalid cmd arg[1]");
                     return;
             }
@@ -111,21 +115,20 @@ void process_input(std::vector<std::string> &args) {
             CHECK_ID(args[1]);
 
             cmd = LuminaireCmd{
-                .request = Request::SET_REF, .unit = Unit::LUX, .value = std::stof(args[2])};
+                .request = Request::SET, .target = Target::REF, .value = std::stof(args[2])};
             break;
 
         case 'o':  // Set occupancy
             CHECK_ID(args[1]);
 
-            cmd = ContollerCmd{.request = Request::SET_VAL,
-                               .target = Target::OCCUPANCY,
-                               .value = std::stof(args[2])};
+            cmd = LuminaireCmd{
+                .request = Request::SET, .target = Target::OCCUPANCY, .value = std::stof(args[2])};
             break;
 
         case 'a':  // Set anti-windup
             CHECK_ID(args[1]);
 
-            cmd = ContollerCmd{.request = Request::SET_VAL,
+            cmd = LuminaireCmd{.request = Request::SET,
                                .target = Target::ANTI_WINDUP,
                                .value = std::stof(args[2])};
             break;
@@ -133,26 +136,26 @@ void process_input(std::vector<std::string> &args) {
         case 'k':  // Set feedback
             CHECK_ID(args[1]);
 
-            cmd = ContollerCmd{.request = Request::SET_VAL,
-                               .target = Target::FEEDBACK,
-                               .value = std::stof(args[2])};
+            cmd = LuminaireCmd{
+                .request = Request::SET, .target = Target::FEEDBACK, .value = std::stof(args[2])};
             break;
 
         case 's':  // Start stream
             CHECK_ID(args[2]);
 
             cmd = MonitorCmd{
-                .request = Request::ON, .monitor = TargetM::STREAM, .variable = args[1][0]};
+                .request = Request::TURN_ON, .monitor = Monitor::STREAM, .variable = args[1][0]};
             break;
 
         case 'S':  // Stop stream
             CHECK_ID(args[2]);
 
             cmd = MonitorCmd{
-                .request = Request::OFF, .monitor = TargetM::STREAM, .variable = args[1][0]};
+                .request = Request::TURN_OFF, .monitor = Monitor::STREAM, .variable = args[1][0]};
             break;
 
         default:
+            SEND_ERR();
             LOGGER_SEND_ERROR("Invalid cmd arg[0]");
             return;
     }

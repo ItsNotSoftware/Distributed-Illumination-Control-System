@@ -10,6 +10,7 @@ void CommandFifo::push(Command& item) {
         q.push(item);
         mutex_exit(&mtx);
     } else {
+        SEND_ERR();
         LOGGER_SEND_ERROR("Failed to aquire lock, push");
     }
 }

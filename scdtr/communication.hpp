@@ -13,6 +13,9 @@
 #define LOGGER_SEND_ERROR(error) Serial.println("[ERROR]: " + String(error))
 #define LOGGER_SEND_WARNING(warning) Serial.println("[WARNING]: " + String(warning))
 
+#define SEND_ACK() Serial.println("ack")
+#define SEND_ERR() Serial.println("err")
+
 namespace SerialCom {
 void read();
 }
