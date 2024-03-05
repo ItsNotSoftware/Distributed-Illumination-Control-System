@@ -67,18 +67,16 @@ void process_input(std::vector<std::string> &args) {
                     break;
 
                 case 'x':  // Instantaneous luminosity
-                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::LUX, .value = 0};
+                    cmd = LuminaireCmd{
+                        .request = Request::GET, .target = Target::EXT_LUX, .value = 0};
                     break;
 
                 case 'p':  // Instantaneous power consumption
-                    cmd = MonitorCmd{.request = Request::GET,
-                                     .monitor = Monitor::INST_POWER_COMSUMPTION};
+                    cmd = MonitorCmd{.monitor = Monitor::INST_POWER_COMSUMPTION};
                     break;
 
                 case 't':  // Time since restart
-                    cmd = MonitorCmd{.request = Request::GET,
-                                     .monitor = Monitor::TIME_SINSE_RESTART,
-                                     .variable = 0};
+                    cmd = MonitorCmd{.monitor = Monitor::TIME_SINSE_RESTART, .variable = 0};
                     break;
 
                 case 'b':  // Buffer
@@ -87,21 +85,15 @@ void process_input(std::vector<std::string> &args) {
                     break;
 
                 case 'e':  // Avg power consumption
-                    cmd = MonitorCmd{.request = Request::GET,
-                                     .monitor = Monitor::AVG_POWER_CONSUMPTION,
-                                     .variable = 0};
+                    cmd = MonitorCmd{.monitor = Monitor::AVG_POWER_CONSUMPTION, .variable = 0};
                     break;
 
                 case 'v':  // Avg visibility error
-                    cmd = MonitorCmd{.request = Request::GET,
-                                     .monitor = Monitor::AVG_VISIBILITY_ERROR,
-                                     .variable = 0};
+                    cmd = MonitorCmd{.monitor = Monitor::AVG_VISIBILITY_ERROR, .variable = 0};
                     break;
 
                 case 'f':  // Avg flicker error
-                    cmd = MonitorCmd{.request = Request::GET,
-                                     .monitor = Monitor::AVG_FLICKER_ERROR,
-                                     .variable = 0};
+                    cmd = MonitorCmd{.monitor = Monitor::AVG_FLICKER_ERROR, .variable = 0};
                     break;
 
                 default:
@@ -143,15 +135,17 @@ void process_input(std::vector<std::string> &args) {
         case 's':  // Start stream
             CHECK_ID(args[2]);
 
-            cmd = MonitorCmd{
-                .request = Request::TURN_ON, .monitor = Monitor::STREAM, .variable = args[1][0]};
+            cmd = MonitorCmd{.request = Request::TURN_ON,
+                             .monitor = Monitor::START_STREAM,
+                             .variable = args[1][0]};
             break;
 
         case 'S':  // Stop stream
             CHECK_ID(args[2]);
 
-            cmd = MonitorCmd{
-                .request = Request::TURN_OFF, .monitor = Monitor::STREAM, .variable = args[1][0]};
+            cmd = MonitorCmd{.request = Request::TURN_OFF,
+                             .monitor = Monitor::STOP_STREAM,
+                             .variable = args[1][0]};
             break;
 
         default:

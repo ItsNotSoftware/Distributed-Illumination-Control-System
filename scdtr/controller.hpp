@@ -10,11 +10,12 @@ class Controller {
     void set_Kp(float Kp);
     void set_Ki(float Ki);
     void set_Kd(float Kd);
-    void set feedback(bool enable);
+    void set_feedback(bool enable);
     void set_anti_windup_state(bool enable);
     void set_target(float target);
 
     bool get_feedback();
+    bool get_anti_windup_state();
     float get_target();
     float get_Kp();
     float get_Ki();

@@ -15,6 +15,7 @@ void Controller::set_feedback(bool enable) { feedback = enable; }
 
 // Getters
 bool Controller::get_feedback() { return feedback; }
+bool Controller::get_anti_windup_state() { return anti_windup; }
 float Controller::get_target() { return target; }
 float Controller::get_Kp() { return Kp; }
 float Controller::get_Ki() { return Ki; }

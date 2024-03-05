@@ -1,9 +1,12 @@
 #include "command.hpp"
 
+#include <numeric>
+
 #include "communication.hpp"
 #include "controller.hpp"
 #include "led.hpp"
 #include "luxmeter.hpp"
+#include "ring_buffer.hpp"
 
 // lumminair
 extern Luxmeter luxmeter;
@@ -11,12 +14,15 @@ extern LED led;
 extern Controller controller;
 extern uint8_t id;
 extern bool contoller_active;
+extern RingBuffer<float, 100> lux_buffer;
+extern RingBuffer<float, 100> dutycycle_buffer;
+extern uint32_t curr_time;
 
 static std::string id_str = std::to_string(id) + " ";
 
 // controller
 
-void luminair_setters(Target target, float value) {
+inline void luminair_setters(Target target, float value) {
     switch (target) {
         case Target::DC:
             led.set_duty_cycle(value);
@@ -47,7 +53,7 @@ void luminair_setters(Target target, float value) {
     SEND_ACK();
 }
 
-void luminair_getters(Target target) {
+inline void luminair_getters(Target target) {
     std::string response;
 
     switch (target) {
@@ -75,6 +81,14 @@ void luminair_getters(Target target) {
             response = "k " + id_str + std::to_string(controller.get_feedback() ? 1 : 0);
             break;
 
+        case Target::EXT_LUX:
+            led.set_pwm_range(0);     // Turn off the led
+            delay(100);               // Wait for the led to turn off
+            luxmeter.sample(16, 20);  // 16 samples, 20ms delay
+
+            response = "l " + id_str + std::to_string(luxmeter.get_lux());
+            break;
+
         default:
             LOGGER_SEND_ERROR("Invalid target");
             return;
@@ -83,7 +97,7 @@ void luminair_getters(Target target) {
     Serial.println(response.c_str());
 }
 
-void process_luminair_cmd(LuminaireCmd &cmd) {
+inline void process_luminair_cmd(LuminaireCmd &cmd) {
     std::string response;
 
     switch (cmd.request) {
@@ -98,6 +112,57 @@ void process_luminair_cmd(LuminaireCmd &cmd) {
         default:
             SEND_ERR();
             LOGGER_SEND_ERROR("Invalid request");
+            break;
+    }
+}
+
+inline void process_monitor_cmf(MonitorCmd &cmd) {
+    std::string response;
+    switch (cmd.monitor) {
+        case Monitor::INST_POWER_COMSUMPTION:
+            response = "p " + id_str + std::to_string(led.get_duty_cycle()) + " x Pmax";
+            break;
+
+        case Monitor::AVG_POWER_CONSUMPTION:
+            float sum =
+                std::accumulate(dutycycle_buffer.buffer.begin(), dutycycle_buffer.buffer.end(), 0);
+            float avg = sum / dutycycle_buffer.buffer.size();
+
+            response = "e " + id_str + std::to_string(avg) + " x Pmax";
+            break;
+
+        case Monitor::TIME_SINSE_RESTART:
+            response = "t " + id_str + std::to_string(curr_time) + "ms";
+            break;
+
+        case Monitor::START_STREAM:
+            if (cmd.variable == 'l') {
+                stream_lux = true;
+            } else if (cmd.variable == 'd') {
+                stream_dutycycle = true;
+            }
+            break;
+
+        case Monitor::STOP_STREAM:
+            if (cmd.variable == 'l') {
+                stream_lux = false;
+            } else if (cmd.variable == 'd') {
+                stream_dutycycle = false;
+            }
+            break;
+
+        case Monitor::BUFFER:
+            if (cmd.variable == 'l') {
+                response = "b l " + id_str + lux_buffer.to_str();
+                Serial.println(response.c_str());
+            } else if (cmd.variable == 'd') {
+                response = "b d " + id_str + dutycycle_buffer.to_str();
+                Serial.println(response.c_str());
+            }
+
+        default:
+            SEND_ERR();
+            LOGGER_SEND_ERROR("Invalid monitor");
             break;
     }
 }

@@ -9,27 +9,29 @@
 #include "led.hpp"
 #include "luxmeter.hpp"
 #include "pico/stdlib.h"
+#include "ring_buffer.hpp"
 
 constexpr uint32_t CONTROLLER_INTERVAL = 10;  // ms
 constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms
 
 Luxmeter luxmeter(A0);
 LED led(15);
-// Controller controller(0.0667, 0.0813, 0.011, 14);
+
 Controller controller(0.0082, 0.0313, 0.181, 2.8);
 bool contoller_active = true;
 
-// FIFOs for IPC
-CommandFifo fifo0;  // core #0
-CommandFifo fifo1;  // core #1
+RingBuffer<float, 100> lux_buffer;
+RingBuffer<float, 100> dutycycle_buffer;
 
-// Placeholder for commands
-Command cmd0;  // core #0
-Command cmd1;  // core #1
+bool steam_lux = false;
+bool stream_dutycycle = false;
+
+CommandFifo fifo0;  // FIFO for IPC
+Command cmd0;       // Command object
 
 uint8_t id = 0;  // lumminair id
 
-// Time keeping for schedualing
+// Time keeping for scheduling
 uint32_t curr_time = 0;
 uint32_t prev_controller_t = 0;
 uint32_t prev_adc_t = 0;
@@ -52,6 +54,22 @@ void setup() {
 }
 void setup1() {}
 
+/* Stream the lux and dutycycle data to the serial port */
+inline void stream() {
+    if (stream_dutycycle) {
+        std::string msg = "s d " + std::to_string(id) + ' ' +
+                          std::to_string(dutycycle_buffer.pop()) + ' ' + std::to_string(curr_time);
+
+        Serial.println(msg.c_str());
+    }
+    if (steam_lux) {
+        std::string msg = "s l " + std::to_string(id) + ' ' + std::to_string(lux_buffer.pop()) +
+                          ' ' + std::to_string(curr_time);
+
+        Serial.println(msg.c_str());
+    }
+}
+
 /**
  * [Core #0 loop]:
  *     Task1 -> Contorller (100Hz).
@@ -70,10 +88,12 @@ void loop() {
         if (contoller_active) {
             float u = controller.compute_pwm_signal(lux, curr_time);
             led.set_pwm_range(u);
-        }
 
-        LOGGER_SEND_VAL("Luminosity", lux);
-        LOGGER_SEND_VAL("DutyCycle", u);
+            lux_buffer.push(lux);
+            dutycycle_buffer.push(u / DAC_RANGE);
+
+            stream();
+        }
     }
 
     // Task 2: ADC sampling
