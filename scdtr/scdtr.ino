@@ -26,8 +26,8 @@ RingBuffer<float, 100> dutycycle_buffer;
 bool steam_lux = false;
 bool stream_dutycycle = false;
 
-CommandFifo fifo0;  // FIFO for IPC
-Command cmd0;       // Command object
+CommandFifo<Command> fifo0;  // FIFO for IPC
+Command cmd0;                // Command object
 
 uint8_t id = 0;  // lumminair id
 
@@ -98,7 +98,7 @@ void loop() {
 
     // Task 2: ADC sampling
     if (curr_time - prev_adc_t >= ADC_SAMPLE_INTERVAL) {
-        prev_adc_t = curr_time;  // Update the timeo
+        prev_adc_t = curr_time;  // Update the timer
 
         luxmeter.sample();
     }

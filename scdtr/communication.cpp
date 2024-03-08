@@ -10,7 +10,7 @@
         return;               \
     }
 
-extern CommandFifo fifo0;
+extern CommandFifo<Command> fifo0;
 extern uint8_t id;
 
 void process_input(std::vector<std::string> &args) {
@@ -80,8 +80,7 @@ void process_input(std::vector<std::string> &args) {
                     break;
 
                 case 'b':  // Buffer
-                    cmd = MonitorCmd{
-                        .request = Request::GET, .monitor = Monitor::BUFFER, .variable = 0};
+                    cmd = MonitorCmd{.monitor = Monitor::BUFFER, .variable = 0};
                     break;
 
                 case 'e':  // Avg power consumption
@@ -135,17 +134,13 @@ void process_input(std::vector<std::string> &args) {
         case 's':  // Start stream
             CHECK_ID(args[2]);
 
-            cmd = MonitorCmd{.request = Request::TURN_ON,
-                             .monitor = Monitor::START_STREAM,
-                             .variable = args[1][0]};
+            cmd = MonitorCmd{.monitor = Monitor::START_STREAM, .variable = args[1][0]};
             break;
 
         case 'S':  // Stop stream
             CHECK_ID(args[2]);
 
-            cmd = MonitorCmd{.request = Request::TURN_OFF,
-                             .monitor = Monitor::STOP_STREAM,
-                             .variable = args[1][0]};
+            cmd = MonitorCmd{.monitor = Monitor::STOP_STREAM, .variable = args[1][0]};
             break;
 
         default:

@@ -14,6 +14,8 @@ extern LED led;
 extern Controller controller;
 extern uint8_t id;
 extern bool contoller_active;
+extern bool stream_lux;
+extern bool stream_dutycycle;
 extern RingBuffer<float, 100> lux_buffer;
 extern RingBuffer<float, 100> dutycycle_buffer;
 extern uint32_t curr_time;
@@ -117,16 +119,18 @@ inline void process_luminair_cmd(LuminaireCmd &cmd) {
 }
 
 inline void process_monitor_cmf(MonitorCmd &cmd) {
+    float sum, avg;
     std::string response;
+
     switch (cmd.monitor) {
         case Monitor::INST_POWER_COMSUMPTION:
             response = "p " + id_str + std::to_string(led.get_duty_cycle()) + " x Pmax";
             break;
 
         case Monitor::AVG_POWER_CONSUMPTION:
-            float sum =
+            sum =
                 std::accumulate(dutycycle_buffer.buffer.begin(), dutycycle_buffer.buffer.end(), 0);
-            float avg = sum / dutycycle_buffer.buffer.size();
+            avg = sum / dutycycle_buffer.buffer.size();
 
             response = "e " + id_str + std::to_string(avg) + " x Pmax";
             break;
