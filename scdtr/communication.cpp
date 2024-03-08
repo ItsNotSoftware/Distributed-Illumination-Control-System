@@ -1,7 +1,7 @@
-#include "communication.hpp"
+#include "include/communication.hpp"
 
-#include "command.hpp"
-#include "command_fifo.hpp"
+#include "include/command.hpp"
+#include "include/command_fifo.hpp"
 
 // Check if lumminair id matches
 #define CHECK_ID(x)           \

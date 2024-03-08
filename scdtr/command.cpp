@@ -1,12 +1,12 @@
-#include "command.hpp"
+#include "include/command.hpp"
 
 #include <numeric>
 
-#include "communication.hpp"
-#include "controller.hpp"
-#include "led.hpp"
-#include "luxmeter.hpp"
-#include "ring_buffer.hpp"
+#include "include/communication.hpp"
+#include "include/controller.hpp"
+#include "include/led.hpp"
+#include "include/luxmeter.hpp"
+#include "include/ring_buffer.hpp"
 
 // lumminair
 extern Luxmeter luxmeter;

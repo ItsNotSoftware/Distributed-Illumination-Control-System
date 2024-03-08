@@ -1,15 +1,15 @@
 #include <Arduino.h>
 
-#include "command.hpp"
-#include "command_fifo.hpp"
-#include "communication.hpp"
-#include "controller.hpp"
 #include "hardware/resets.h"
 #include "hardware/watchdog.h"
-#include "led.hpp"
-#include "luxmeter.hpp"
+#include "include/command.hpp"
+#include "include/command_fifo.hpp"
+#include "include/communication.hpp"
+#include "include/controller.hpp"
+#include "include/led.hpp"
+#include "include/luxmeter.hpp"
+#include "include/ring_buffer.hpp"
 #include "pico/stdlib.h"
-#include "ring_buffer.hpp"
 
 constexpr uint32_t CONTROLLER_INTERVAL = 10;  // ms
 constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms

@@ -1,4 +1,4 @@
-#include "luxmeter.hpp"
+#include "include/luxmeter.hpp"
 
 Luxmeter::Luxmeter(uint8_t pin) : pin(pin) {
     pinMode(pin, INPUT);
