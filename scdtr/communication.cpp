@@ -1,7 +1,7 @@
 #include "include/communication.hpp"
 
 #include "include/command.hpp"
-#include "include/command_fifo.hpp"
+#include "include/thread_safe_fifo.hpp"
 
 // Check if lumminair id matches
 #define CHECK_ID(x)           \
@@ -10,7 +10,7 @@
         return;               \
     }
 
-extern CommandFifo<Command> fifo0;
+extern ThreadSafeFifo<Command> fifo0;
 extern uint8_t id;
 
 void process_input(std::vector<std::string> &args) {

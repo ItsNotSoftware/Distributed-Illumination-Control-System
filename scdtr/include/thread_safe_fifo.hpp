@@ -10,9 +10,9 @@
 
 /* Wrapper arround std::queue for safe IPC */
 template <typename T>
-class CommandFifo {
+class ThreadSafeFifo {
    public:
-    CommandFifo() { mutex_init(&mtx); };
+    ThreadSafeFifo() { mutex_init(&mtx); };
     /*
      * Push item to queue.
      *

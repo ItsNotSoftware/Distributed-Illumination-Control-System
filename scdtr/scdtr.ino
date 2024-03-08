@@ -3,12 +3,12 @@
 #include "hardware/resets.h"
 #include "hardware/watchdog.h"
 #include "include/command.hpp"
-#include "include/command_fifo.hpp"
 #include "include/communication.hpp"
 #include "include/controller.hpp"
 #include "include/led.hpp"
 #include "include/luxmeter.hpp"
 #include "include/ring_buffer.hpp"
+#include "include/thread_safe_fifo.hpp"
 #include "pico/stdlib.h"
 
 constexpr uint32_t CONTROLLER_INTERVAL = 10;  // ms
@@ -26,8 +26,8 @@ RingBuffer<float, 100> dutycycle_buffer;
 bool steam_lux = false;
 bool stream_dutycycle = false;
 
-CommandFifo<Command> fifo0;  // FIFO for IPC
-Command cmd0;                // Command object
+ThreadSafeFifo<Command> fifo0;  // FIFO for IPC
+Command cmd0;                   // Command object
 
 uint8_t id = 0;  // lumminair id
 
