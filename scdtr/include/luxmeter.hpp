@@ -43,13 +43,6 @@ class Luxmeter {
     void sample(uint8_t n_samples, uint16_t delay_ms);
 
     /**
-     * Read ADC value and convert to LUX.
-     *
-     * @return LUX value.
-     */
-    float get_lux();
-
-    /**
      * Get resistance value of LDR.
      *
      * @param v_mv LDR voltage in mV.
@@ -57,6 +50,29 @@ class Luxmeter {
      * @return Resistance in ohms.
      */
     float get_LDR_resistance(uint16_t v_mv);
+
+    /**
+     * Convert volatge to LUX.
+     *
+     * @return LUX value.
+     */
+    float mv_to_lux(float mv);
+
+    /**
+     * Convert LUX to voltage.
+     *
+     * @param lux LUX value.
+     *
+     * @return Voltage in mV.
+     */
+    float lux_to_mv(float lux);
+
+    /**
+     * Get LUX value.
+     *
+     * @return LUX value.
+     */
+    float get_lux();
 
    private:
     uint8_t pin;

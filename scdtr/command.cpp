@@ -31,7 +31,7 @@ inline void luminair_setters(Target target, float value) {
             break;
 
         case Target::REF:
-            controller.set_target(value);
+            controller.set_target(luxmeter.lux_to_mv(value));
             break;
 
         case Target::OCCUPANCY:

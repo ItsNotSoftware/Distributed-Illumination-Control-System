@@ -45,3 +45,15 @@ float Luxmeter::get_lux() {
 
     return std::pow(10, exp);
 }
+
+float Luxmeter::mv_to_lux(float mv) {
+    float R = get_LDR_resistance(mv);
+    float exp = (std::log10(R) - b) / m;
+
+    return std::pow(10, exp);
+}
+
+float Luxmeter::lux_to_mv(float lux) {
+    float R = std::pow(10, m * std::log10(lux) + b);
+    return (3.3f * 10'000) / (10'000 + R);
+}
