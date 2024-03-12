@@ -87,9 +87,10 @@ void loop() {
         float lux = luxmeter.mv_to_lux(mv);
 
         if (contoller_active) {
-            float u = controller.compute_pwm_signal(lux, curr_time);
-            LOGGER_SEND_CONTROLLER_DATA(curr_time, u, mv, controller.get_target());
+            uint8_t u = controller.compute_pwm_signal(lux, curr_time);
             led.set_pwm_range(u);
+
+            LOGGER_SEND_CONTROLLER_DATA(curr_time, u, mv, controller.get_target());
 
             lux_buffer.push(lux);
             dutycycle_buffer.push(u / DAC_RANGE);

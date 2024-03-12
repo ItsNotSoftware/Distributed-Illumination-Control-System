@@ -35,7 +35,7 @@ class Controller {
      *
      * @return The PWM signal.
      */
-    float compute_pwm_signal(float luminusity, uint32_t current_time);
+    uint8_t compute_pwm_signal(float luminusity, uint32_t current_time);
 
    private:
     bool anti_windup;

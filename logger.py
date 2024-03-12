@@ -3,23 +3,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 import threading
-import time
-
 from colorama import Fore, Style, init
 from termcolor import colored
-from matplotlib.animation import FuncAnimation
-import matplotlib.animation as animation
+import time
+import socket
 
+from plot import IP, PORT
 
-# Print options
 ERROR = True
 WARNINGS = True
 INFO = True
 VALUES = True
-
-X_LIM = 1000
-
-
 START_TIME = int(round(time.time() * 1000))
 
 
@@ -41,42 +35,9 @@ class Interface:
         self.warning_file = open("logs/warning.log", "w")
         self.error_file = open("logs/error.log", "w")
 
-        self.x_data = []
-        self.u_data = []
-        self.y1_data = []
-        self.y2_data = []
-
-        # plots
-        self.fig, self.ax = plt.subplots()
-        (self.ln1,) = plt.plot([], [], "r-", animated=True)
-        (self.ln2,) = plt.plot([], [], "g-", animated=True)
-        self.ani = FuncAnimation(
-            self.fig, self.update_plot, init_func=self.init_plot, interval=50, blit=True
-        )
-        plt.show()
-
-    def init_plot(self):
-        self.ax.set_ylim(0, 3000)
-        self.ax.grid()
-        self.ax.legend(["traget", "current"])
-        # titles
-        self.ax.set_xlabel("Time (ms)")
-        self.ax.set_ylabel("Volatge (mV)")
-
-        return self.ln1, self.ln2
-
-    def update_plot(self, frame):
-        if len(self.x_data) > X_LIM:  # Make plot window slide after filling up
-            self.ax.set_xlim(self.x_data[-X_LIM], self.x_data[-1])
-
-        self.ln1.set_data(self.x_data, self.y1_data)
-        self.ln2.set_data(self.x_data, self.y2_data)
-
-        return self.ln1, self.ln2
+        self.plot_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     def read_serial(self):
-        time.sleep(1)
-
         while True:
             data = self.port.readline().decode().replace("\n", "")
             words = data.split()
@@ -109,13 +70,11 @@ class Interface:
                     self.values[words[1]] = [words[2]]
 
                 if VALUES:
-                    print("\t", data)
+                    print(colored(data, "blue"))
 
             elif words[0] == "[CONTROLLER]:":
-                self.x_data.append(float(words[1]))
-                self.u_data.append(float(words[2]))
-                self.y1_data.append(float(words[3]))
-                self.y2_data.append(float(words[4]))
+                words.pop(0)
+                self.plot_socket.sendto(" ".join(words).encode(), (IP, PORT))
 
             else:
                 print(data)
@@ -142,11 +101,6 @@ class Interface:
     def on_exit(self):
         self.port.close()
         self.gen_plots()
-
-        np.save("logs/ct.npy", self.x_data)
-        np.save("logs/cu.npy", self.u_data)
-        np.save("logs/cy1.npy", self.y1_data)
-        np.save("logs/cy2.npy", self.y2_data)
 
         self.info_file.close()
         self.warning_file.close()

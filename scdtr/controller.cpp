@@ -33,7 +33,7 @@ float Controller::get_Kd() { return Kd; }
 float Controller::get_c() { return c; }
 float Controller::get_b() { return b; }
 
-float Controller::compute_pwm_signal(float y, uint32_t current_time) {
+uint8_t Controller::compute_pwm_signal(float y, uint32_t current_time) {
     if (!feedback) {
         return target * 17;  // target * system_gain^-1
     }
