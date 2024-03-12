@@ -4,7 +4,7 @@
 #include <variant>
 
 enum class Request { SET, GET, TURN_ON, TURN_OFF };
-enum class Target { KD, KP, KI, REF, DC, LUX, EXT_LUX, ANTI_WINDUP, FEEDBACK, OCCUPANCY };
+enum class Target { KD, KP, KI, B, C, REF, DC, LUX, EXT_LUX, ANTI_WINDUP, FEEDBACK, OCCUPANCY };
 enum class Monitor {
     INST_POWER_COMSUMPTION,
     AVG_POWER_CONSUMPTION,

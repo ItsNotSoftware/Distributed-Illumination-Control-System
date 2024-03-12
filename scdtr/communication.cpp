@@ -28,6 +28,41 @@ void process_input(std::vector<std::string> &args) {
     Command cmd;
 
     switch (args[0][0]) {
+        case 'P':  // Set Kp
+            CHECK_ID(args[1]);
+
+            cmd = LuminaireCmd{
+                .request = Request::SET, .target = Target::KP, .value = std::stof(args[2])};
+            break;
+
+        case 'I':  // Set Ki
+            CHECK_ID(args[1]);
+
+            cmd = LuminaireCmd{
+                .request = Request::SET, .target = Target::KI, .value = std::stof(args[2])};
+            break;
+
+        case 'D':  // Set Kd
+            CHECK_ID(args[1]);
+
+            cmd = LuminaireCmd{
+                .request = Request::SET, .target = Target::KD, .value = std::stof(args[2])};
+            break;
+
+        case 'B':  // Set b
+            CHECK_ID(args[1]);
+
+            cmd = LuminaireCmd{
+                .request = Request::SET, .target = Target::B, .value = std::stof(args[2])};
+            break;
+
+        case 'C':  // Set c
+            CHECK_ID(args[1]);
+
+            cmd = LuminaireCmd{
+                .request = Request::SET, .target = Target::C, .value = std::stof(args[2])};
+            break;
+
         case 'd':  // Set Lumminair duty cycle
             CHECK_ID(args[1]);
 
@@ -39,59 +74,115 @@ void process_input(std::vector<std::string> &args) {
             CHECK_ID(args[2]);
 
             switch (args[1][0]) {
+                case 'P':  // Kp
+                    CHECK_ID(args[2]);
+
+                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::KP, .value = 0};
+                    break;
+
+                case 'I':  // Ki
+                    CHECK_ID(args[2]);
+
+                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::KI, .value = 0};
+                    break;
+
+                case 'D':  // Kd
+                    CHECK_ID(args[2]);
+
+                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::KD, .value = 0};
+                    break;
+
+                case 'B':  // b
+                    CHECK_ID(args[2]);
+
+                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::B, .value = 0};
+                    break;
+
+                case 'C':  // c
+                    CHECK_ID(args[2]);
+
+                    cmd = LuminaireCmd{.request = Request::GET, .target = Target::C, .value = 0};
+                    break;
+
                 case 'd':  // Duty cycle
+                    CHECK_ID(args[2]);
+
                     cmd = LuminaireCmd{.request = Request::GET, .target = Target::DC, .value = 0};
                     break;
 
                 case 'r':  // Reference
+                    CHECK_ID(args[2]);
+
                     cmd = LuminaireCmd{.request = Request::GET, .target = Target::REF, .value = 0};
                     break;
 
                 case 'l':  // Luminosity
+                    CHECK_ID(args[2]);
+
                     cmd = LuminaireCmd{.request = Request::GET, .target = Target::LUX, .value = 0};
                     break;
 
                 case 'o':  // Occupancy
+                    CHECK_ID(args[2]);
+
                     cmd = LuminaireCmd{
                         .request = Request::GET, .target = Target::OCCUPANCY, .value = 0};
                     break;
 
                 case 'a':  // Anti-windup
+                    CHECK_ID(args[2]);
+
                     cmd = LuminaireCmd{
                         .request = Request::GET, .target = Target::ANTI_WINDUP, .value = 0};
                     break;
 
                 case 'k':  // Feedback
+                    CHECK_ID(args[2]);
+
                     cmd = LuminaireCmd{
                         .request = Request::GET, .target = Target::FEEDBACK, .value = 0};
                     break;
 
                 case 'x':  // Instantaneous luminosity
+                    CHECK_ID(args[2]);
+
                     cmd = LuminaireCmd{
                         .request = Request::GET, .target = Target::EXT_LUX, .value = 0};
                     break;
 
                 case 'p':  // Instantaneous power consumption
+                    CHECK_ID(args[2]);
+
                     cmd = MonitorCmd{.monitor = Monitor::INST_POWER_COMSUMPTION};
                     break;
 
                 case 't':  // Time since restart
+                    CHECK_ID(args[2]);
+
                     cmd = MonitorCmd{.monitor = Monitor::TIME_SINSE_RESTART, .variable = 0};
                     break;
 
                 case 'b':  // Buffer
+                    CHECK_ID(args[2]);
+
                     cmd = MonitorCmd{.monitor = Monitor::BUFFER, .variable = 0};
                     break;
 
                 case 'e':  // Avg power consumption
+                    CHECK_ID(args[2]);
+
                     cmd = MonitorCmd{.monitor = Monitor::AVG_POWER_CONSUMPTION, .variable = 0};
                     break;
 
                 case 'v':  // Avg visibility error
+                    CHECK_ID(args[2]);
+
                     cmd = MonitorCmd{.monitor = Monitor::AVG_VISIBILITY_ERROR, .variable = 0};
                     break;
 
                 case 'f':  // Avg flicker error
+                    CHECK_ID(args[2]);
+
                     cmd = MonitorCmd{.monitor = Monitor::AVG_FLICKER_ERROR, .variable = 0};
                     break;
 

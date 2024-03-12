@@ -37,11 +37,11 @@ class Plot:
         plt.show()
 
     def init_plot(self):
-        self.ax1.set_ylim(0, 3300)
+        self.ax1.set_ylim(0, 800)
         self.ax1.grid()
         self.ax1.legend(["Target", "Measured"])
 
-        self.ax2.set_ylim(0, 255)
+        self.ax2.set_ylim(0, 260)
         self.ax2.grid()
         self.ax2.legend(["u"])
 
@@ -63,11 +63,12 @@ class Plot:
             msg, _ = self.server_socket.recvfrom(1024)
             msg = msg.decode()
 
-            t, u, ref, val = map(float, msg.split())
+            t, u, val, ref = map(float, msg.split())
             self.t.append(t)
             self.u.append(u)
-            self.ref.append(ref)
             self.val.append(val)
+            self.ref.append(ref)
+            print("Val: ", val, "Ref: ", ref)
 
 
 if __name__ == "__main__":

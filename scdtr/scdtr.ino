@@ -17,7 +17,7 @@ constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms
 Luxmeter luxmeter(A0);
 LED led(15);
 
-Controller controller(0.0082, 0.0313, 0.181, 1, 1, 1000);
+Controller controller(5.25, 0.05, 0.1, 1, 1, 250);
 bool contoller_active = true;
 
 RingBuffer<float, 100> lux_buffer;
@@ -87,7 +87,7 @@ void loop() {
         float lux = luxmeter.mv_to_lux(mv);
 
         if (contoller_active) {
-            uint8_t u = controller.compute_pwm_signal(lux, curr_time);
+            uint8_t u = controller.compute_pwm_signal(mv, curr_time);
             led.set_pwm_range(u);
 
             LOGGER_SEND_CONTROLLER_DATA(curr_time, u, mv, controller.get_target());

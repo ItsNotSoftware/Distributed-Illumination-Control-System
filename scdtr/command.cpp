@@ -26,12 +26,29 @@ static std::string id_str = std::to_string(id) + " ";
 
 inline void luminair_setters(Target target, float value) {
     switch (target) {
+        case Target::KD:
+            controller.set_Kd(value);
+            break;
+
+        case Target::KP:
+            controller.set_Kp(value);
+            break;
+
+        case Target::KI:
+            controller.set_Ki(value);
+            break;
+
+        case Target::B:
+            controller.set_b(value);
+            break;
+
         case Target::DC:
             led.set_duty_cycle(value);
             break;
 
         case Target::REF:
-            controller.set_target(luxmeter.lux_to_mv(value));
+            // TODO: convert to lux
+            controller.set_target(value);
             break;
 
         case Target::OCCUPANCY:
@@ -59,6 +76,26 @@ inline void luminair_getters(Target target) {
     std::string response;
 
     switch (target) {
+        case Target::KD:
+            response = "d " + id_str + std::to_string(controller.get_Kd());
+            break;
+
+        case Target::KP:
+            response = "p " + id_str + std::to_string(controller.get_Kp());
+            break;
+
+        case Target::KI:
+            response = "i " + id_str + std::to_string(controller.get_Ki());
+            break;
+
+        case Target::B:
+            response = "b " + id_str + std::to_string(controller.get_b());
+            break;
+
+        case Target::C:
+            response = "c " + id_str + std::to_string(controller.get_c());
+            break;
+
         case Target::DC:
             response = "d " + id_str + std::to_string(led.get_duty_cycle());
             break;

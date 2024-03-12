@@ -1,11 +1,13 @@
 #include "include/controller.hpp"
 
+#include "include/communication.hpp"
 #include "include/led.hpp"
 
 Controller::Controller(float Kp, float Ki, float Kd, float b, float c, float target)
     : prev_timestamp(0),
       anti_windup(true),
       target(target),
+      feedback(true),
       Kp(Kp),
       Ki(Ki),
       Kd(Kd),
@@ -55,16 +57,16 @@ uint8_t Controller::compute_pwm_signal(float y, uint32_t current_time) {
 
     prev_derivative_error = derivative_error;
 
-    float pwm_signal = P + I + D;
+    uint8_t pwm_signal = std::round(P + I + D);
 
     // Anti-windup
     if (anti_windup) {
         if (pwm_signal > DAC_RANGE) {
             pwm_signal = DAC_RANGE;
-            integral -= integral_error * dt;
+            integral = 0;
         } else if (pwm_signal < 0.0) {
             pwm_signal = 0.0;
-            integral -= integral_error * dt;
+            integral = 0;
         }
     } else {
         // clamp the pwm signal
