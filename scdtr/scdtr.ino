@@ -11,6 +11,9 @@
 #include "include/thread_safe_fifo.hpp"
 #include "pico/stdlib.h"
 
+#define SEND_CAN 0
+#define RCV_CAN 1
+
 constexpr uint32_t CONTROLLER_INTERVAL = 10;  // ms
 constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms
 
@@ -29,12 +32,16 @@ bool stream_dutycycle = false;
 ThreadSafeFifo<Command> fifo0;  // FIFO for IPC
 Command cmd0;                   // Command object
 
+CAN can_handler(20);
+
 uint8_t id = 0;  // lumminair id
 
 // Time keeping for scheduling
 uint32_t curr_time = 0;
 uint32_t prev_controller_t = 0;
 uint32_t prev_adc_t = 0;
+
+can_frame can_msg;  // !!!
 
 void setup() {
     Serial.begin(115200);
@@ -55,7 +62,7 @@ void setup() {
     // Setting up a wachdog timmer
     watchdog_enable(CONTROLLER_INTERVAL * 3, 1);
 }
-void setup1() {}
+void setup1() { can_handler.setup(); }
 
 /* Stream the lux and dutycycle data to the serial port */
 inline void stream() {
@@ -119,9 +126,30 @@ void loop() {
 
 /**
  * [Core #1 loop]:
- *      Task1 -> Serial communication (if msg is recived).
+ *      Task1 -> CAN  communication (if msg is recived).
+ *      Task2 -> Serial communication (if msg is recived).
  */
-void loop1() { SerialCom::read(); }
+void loop1() {
+    USB::handle();
 
-// note: a = 15.564501347708887; b = -1.2545202156334199
-// node: response = 820ms
+#if RCV_CAN
+    if (can_handler.receive_msg(can_msg)) {
+        std::string msg = "can -> " + std::to_string(can_msg.can_id) + ' ' +
+                          std::to_string(can_msg.data[0]) + ' ' + std::to_string(can_msg.data[1]) +
+                          ' ' + std::to_string(can_msg.data[2]) + ' ' +
+                          std::to_string(can_msg.data[3]) + ' ' + std::to_string(can_msg.data[4]) +
+                          ' ' + std::to_string(can_msg.data[5]) + ' ' +
+                          std::to_string(can_msg.data[6]) + ' ' + std::to_string(can_msg.data[7]);
+        LOGGER_SEND_INFO(msg.c_str());
+    }
+#endif
+
+#if SEND_CAN
+
+    if (curr_time % 500 == 0) {
+        can_frame msg = {0x123, 8, {0, 1, 2, 3, 4, 5, 6, 7}};
+        can_handler.send_msg(msg);
+    }
+
+#endif
+}

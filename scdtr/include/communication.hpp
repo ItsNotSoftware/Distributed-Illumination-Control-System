@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+#include "mcp2515.hpp"
+
 // custom messages for a serial monitor LOGGER
 #define LOGGER_SEND_VAL(id, val) Serial.println("[VALUE]: " + String(id) + " " + String(val))
 #define LOGGER_SEND_INFO(info) Serial.println("[INFO]: " + String(info))
@@ -20,8 +22,20 @@
 #define SEND_ACK() Serial.println("ack")
 #define SEND_ERR() Serial.println("err")
 
-namespace SerialCom {
-void read();
+class CAN {
+   public:
+    CAN(uint8_t interrupt_pin);
+    void setup();
+    void send_msg(can_frame &msg);
+    bool receive_msg(can_frame &msg);
+
+   private:
+    uint8_t interrupt_pin;
+    MCP2515 can0;
+};
+
+namespace USB {
+void handle();
 }
 
 #endif

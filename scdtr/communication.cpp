@@ -13,6 +13,73 @@
 extern ThreadSafeFifo<Command> fifo0;
 extern uint8_t id;
 
+volatile bool can0_flag = false;
+
+void can_interrupt(uint gpio, uint32_t events) { can0_flag = true; }
+
+CAN::CAN(uint8_t interrupt_pin)
+    : interrupt_pin(interrupt_pin), can0(spi0, 17, 19, 16, 18, 10'000'000) {}
+
+inline std::string error_to_str(MCP2515::ERROR err) {
+    switch (err) {
+        case MCP2515::ERROR::ERROR_FAIL:
+            return "ERROR_FAIL";
+        case MCP2515::ERROR::ERROR_ALLTXBUSY:
+            return "ERROR_ALLTXBUSY";
+        case MCP2515::ERROR::ERROR_FAILINIT:
+            return "ERROR_FAILINIT";
+        case MCP2515::ERROR::ERROR_FAILTX:
+            return "ERROR_FAILTX";
+        case MCP2515::ERROR::ERROR_NOMSG:
+            return "ERROR_NOMSG";
+    }
+
+    return "UNKNOWN ERROR";
+}
+
+void CAN::setup() {
+    can0.reset();
+    can0.setBitrate(CAN_1000KBPS);
+    can0.setNormalMode();
+    gpio_set_irq_enabled_with_callback(interrupt_pin, GPIO_IRQ_EDGE_FALL, true, &can_interrupt);
+}
+
+void CAN::send_msg(can_frame &msg) {
+    LOGGER_SEND_INFO("Sending CAN message");
+
+    auto err = can0.sendMessage(&msg);
+
+    if (err) {
+        std::string e_msg = "CAN -> " + error_to_str(err);
+        LOGGER_SEND_ERROR(e_msg.c_str());
+    }
+}
+
+bool CAN::receive_msg(can_frame &msg) {
+    // if (!can0_flag) {
+    //     return false;
+    // }
+    // LOGGER_SEND_INFO("Receiving CAN message");
+    can0_flag = false;
+
+    auto err = can0.readMessage(&msg);
+
+    if (err == MCP2515::ERROR_OK) {
+        return true;
+    } else {
+        return false;
+        
+    }
+    // if (err) {
+    //     std::string e_msg = "CAN -> " + error_to_str(err);
+    //     LOGGER_SEND_ERROR(e_msg.c_str());
+    //     return false;
+    // }
+
+    return true;
+}
+
+namespace USB {
 void process_input(std::vector<std::string> &args) {
     if (args.size() != 3 && args.size() != 4) {
         std::string msg = "Invalid message size " + std::to_string(args.size());
@@ -244,8 +311,7 @@ void process_input(std::vector<std::string> &args) {
     fifo0.push(cmd);
 }
 
-namespace SerialCom {
-void read() {
+void handle() {
     if (Serial.available() > 0) {
         std::string msg = Serial.readString().c_str();
 
@@ -265,4 +331,4 @@ void read() {
         process_input(args);
     }
 }
-}  // namespace SerialCom
+}  // namespace USB
