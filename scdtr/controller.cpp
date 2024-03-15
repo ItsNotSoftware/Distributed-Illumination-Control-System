@@ -61,11 +61,11 @@ uint16_t Controller::compute_pwm_signal(float y, uint32_t current_time) {
 
     // Anti-windup
     if (anti_windup) {
-        if (pwm_signal > DAC_RANGE) {
+        if (pwm_signal >= DAC_RANGE) {
             pwm_signal = DAC_RANGE;
-            integral = 0;
-        } else if (pwm_signal < 0.0) {
-            pwm_signal = 0.0;
+            integral -= integral_error * dt;
+        } else if (pwm_signal <= 0.0) {
+            pwm_signal -= integral_error * dt;
             integral = 0;
         }
     } else {

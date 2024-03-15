@@ -17,7 +17,7 @@ constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms
 Luxmeter luxmeter(A0);
 LED led(15);
 
-Controller controller(10, 0.13, 0.12, 1, 1, 250);
+Controller controller(8, 0.12, 60, 1, 1, 250);
 bool contoller_active = true;
 
 RingBuffer<float, 100> lux_buffer;

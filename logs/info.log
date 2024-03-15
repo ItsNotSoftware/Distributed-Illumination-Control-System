@@ -1,16 +1,3 @@
-[34702]: recived msg -> r 0 100
-[34702]: Pushing cmd to fifo0
-[34703]: Luminaire command received
-[70868]: recived msg -> r 0 50
-[70868]: Pushing cmd to fifo0
-[70868]: Luminaire command received
-[80983]: recived msg -> r 0 220
-[80983]: Pushing cmd to fifo0
-[80983]: Luminaire command received
-[130250]: recived msg -> r 0 80
-[130250]: Pushing cmd to fifo0
-[130250]: Luminaire command received
-[139821]: recived msg -> r 0 180
-[139821]: Pushing cmd to fifo0
-[139821]: Luminaire command received
-[155488]: recived msg -> g 0 d
+[12494]: recived msg -> r 0 88
+[12494]: Pushing cmd to fifo0
+[12494]: Luminaire command received
