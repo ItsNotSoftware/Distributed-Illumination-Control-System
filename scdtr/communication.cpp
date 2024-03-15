@@ -1,7 +1,9 @@
 #include "include/communication.hpp"
 
+#include "hardware/gpio.h"
 #include "include/command.hpp"
 #include "include/thread_safe_fifo.hpp"
+#include "pico/stdlib.h"
 
 // Check if lumminair id matches
 #define CHECK_ID(x)           \
@@ -12,10 +14,6 @@
 
 extern ThreadSafeFifo<Command> fifo0;
 extern uint8_t id;
-
-volatile bool can0_flag = false;
-
-void can_interrupt(uint gpio, uint32_t events) { can0_flag = true; }
 
 CAN::CAN(uint8_t interrupt_pin)
     : interrupt_pin(interrupt_pin), can0(spi0, 17, 19, 16, 18, 10'000'000) {}
@@ -41,7 +39,6 @@ void CAN::setup() {
     can0.reset();
     can0.setBitrate(CAN_1000KBPS);
     can0.setNormalMode();
-    gpio_set_irq_enabled_with_callback(interrupt_pin, GPIO_IRQ_EDGE_FALL, true, &can_interrupt);
 }
 
 void CAN::send_msg(can_frame &msg) {
@@ -56,27 +53,19 @@ void CAN::send_msg(can_frame &msg) {
 }
 
 bool CAN::receive_msg(can_frame &msg) {
-    // if (!can0_flag) {
-    //     return false;
-    // }
-    // LOGGER_SEND_INFO("Receiving CAN message");
-    can0_flag = false;
-
     auto err = can0.readMessage(&msg);
 
-    if (err == MCP2515::ERROR_OK) {
+    if (err == MCP2515::ERROR::ERROR_OK) {  // message received
         return true;
-    } else {
+    } else if (err == MCP2515::ERROR::ERROR_NOMSG) {  // no message
         return false;
-        
     }
-    // if (err) {
-    //     std::string e_msg = "CAN -> " + error_to_str(err);
-    //     LOGGER_SEND_ERROR(e_msg.c_str());
-    //     return false;
-    // }
 
-    return true;
+    // CAN error
+    std::string e_msg = "CAN -> " + error_to_str(err);
+    LOGGER_SEND_ERROR(e_msg.c_str());
+
+    return false;
 }
 
 namespace USB {
