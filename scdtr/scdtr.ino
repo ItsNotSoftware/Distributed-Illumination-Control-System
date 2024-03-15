@@ -11,8 +11,8 @@
 #include "include/thread_safe_fifo.hpp"
 #include "pico/stdlib.h"
 
-#define SEND_CAN 0
-#define RCV_CAN 1
+#define SEND_CAN_TEST 0
+#define RCV_CAN_TEST 0
 
 constexpr uint32_t CONTROLLER_INTERVAL = 10;  // ms
 constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms
@@ -132,7 +132,7 @@ void loop() {
 void loop1() {
     USB::handle();
 
-#if RCV_CAN
+#if RCV_CAN_TEST  // Test if the can bus is working
     if (can_handler.receive_msg(can_msg)) {
         std::string msg = "can -> " + std::to_string(can_msg.can_id) + ' ' +
                           std::to_string(can_msg.data[0]) + ' ' + std::to_string(can_msg.data[1]) +
@@ -144,12 +144,19 @@ void loop1() {
     }
 #endif
 
-#if SEND_CAN
+#if SEND_CAN_TEST
+    can_msg.can_id = 0x123;
+    can_msg.len = 8;
+    can_msg.data[0] = 0x12;
+    can_msg.data[1] = 0x34;
+    can_msg.data[2] = 0x56;
+    can_msg.data[3] = 0x78;
+    can_msg.data[4] = 0x9A;
+    can_msg.data[5] = 0xBC;
+    can_msg.data[6] = 0xDE;
+    can_msg.data[7] = 0xF0;
 
-    if (curr_time % 500 == 0) {
-        can_frame msg = {0x123, 8, {0, 1, 2, 3, 4, 5, 6, 7}};
-        can_handler.send_msg(msg);
-    }
+    can_handler.send_msg(can_msg);
 
 #endif
 }
