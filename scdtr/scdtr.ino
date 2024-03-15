@@ -17,7 +17,7 @@ constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms
 Luxmeter luxmeter(A0);
 LED led(15);
 
-Controller controller(5.25, 0.05, 0.1, 1, 1, 250);
+Controller controller(10, 0.13, 0.12, 1, 1, 250);
 bool contoller_active = true;
 
 RingBuffer<float, 100> lux_buffer;
@@ -38,6 +38,9 @@ uint32_t prev_adc_t = 0;
 
 void setup() {
     Serial.begin(115200);
+    analogWriteFreq(60000);
+    analogWriteResolution(12);
+
     pinMode(PICO_DEFAULT_LED_PIN, OUTPUT);  // Error LED
     delay(100);
     digitalWrite(PICO_DEFAULT_LED_PIN, LOW);
@@ -87,7 +90,7 @@ void loop() {
         float lux = luxmeter.mv_to_lux(mv);
 
         if (contoller_active) {
-            uint8_t u = controller.compute_pwm_signal(mv, curr_time);
+            uint16_t u = controller.compute_pwm_signal(mv, curr_time);
             led.set_pwm_range(u);
 
             LOGGER_SEND_CONTROLLER_DATA(curr_time, u, mv, controller.get_target());

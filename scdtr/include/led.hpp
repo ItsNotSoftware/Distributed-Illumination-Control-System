@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-constexpr uint8_t DAC_RANGE = 255;
+constexpr uint16_t DAC_RANGE = 4095;
 
 /* Class to control the light LED. */
 class LED {
@@ -16,11 +16,11 @@ class LED {
     LED(uint8_t pin);
 
     /**
-     * Sets the PWM value [0,255].
+     * Sets the PWM value [0,4096].
      *
      * @param range PWM range.
      */
-    void set_pwm_range(uint8_t range);
+    void set_pwm_range(uint16_t range);
 
     /**
      * Sets the pwm duty cycle.

@@ -37,11 +37,11 @@ class Plot:
         plt.show()
 
     def init_plot(self):
-        self.ax1.set_ylim(0, 800)
+        self.ax1.set_ylim(0, 500)
         self.ax1.grid()
         self.ax1.legend(["Target", "Measured"])
 
-        self.ax2.set_ylim(0, 260)
+        self.ax2.set_ylim(0, 4096)
         self.ax2.grid()
         self.ax2.legend(["u"])
 
@@ -68,7 +68,7 @@ class Plot:
             self.u.append(u)
             self.val.append(val)
             self.ref.append(ref)
-            print("Val: ", val, "Ref: ", ref)
+            print("Val: ", val, " Ref: ", ref, " U: ", u)
 
 
 if __name__ == "__main__":

@@ -35,7 +35,7 @@ float Controller::get_Kd() { return Kd; }
 float Controller::get_c() { return c; }
 float Controller::get_b() { return b; }
 
-uint8_t Controller::compute_pwm_signal(float y, uint32_t current_time) {
+uint16_t Controller::compute_pwm_signal(float y, uint32_t current_time) {
     if (!feedback) {
         return target * 17;  // target * system_gain^-1
     }
@@ -57,7 +57,7 @@ uint8_t Controller::compute_pwm_signal(float y, uint32_t current_time) {
 
     prev_derivative_error = derivative_error;
 
-    uint8_t pwm_signal = std::round(P + I + D);
+    uint16_t pwm_signal = std::round(P + I + D);
 
     // Anti-windup
     if (anti_windup) {
