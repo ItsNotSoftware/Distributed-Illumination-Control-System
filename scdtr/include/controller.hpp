@@ -18,12 +18,12 @@ class Controller {
     void set_b(float b);
 
     // Getters
-    bool get_feedback();
-    bool get_anti_windup_state();
     float get_target();
     float get_Kp();
     float get_Ki();
     float get_Kd();
+    bool get_feedback();
+    bool get_anti_windup_state();
     float get_c();
     float get_b();
 

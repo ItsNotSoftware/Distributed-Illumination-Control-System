@@ -54,6 +54,8 @@ float Luxmeter::mv_to_lux(float mv) {
 }
 
 float Luxmeter::lux_to_mv(float lux) {
-    float R = std::pow(10, m * std::log10(lux) + b);
-    return (3.3f * 10'000) / (10'000 + R);
+    float R = std::pow(10, (m * std::log10(lux) + b));
+    float v_mv = (3.3f * 10000 * 1000) / (R + 10000);
+
+    return v_mv;
 }

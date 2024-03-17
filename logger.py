@@ -31,6 +31,11 @@ class Interface:
         self.receive_thread.start()
         self.values = {}
 
+        self.t = []
+        self.u = []
+        self.measured = []
+        self.target = []
+
         self.info_file = open("logs/info.log", "w")
         self.warning_file = open("logs/warning.log", "w")
         self.error_file = open("logs/error.log", "w")
@@ -74,6 +79,11 @@ class Interface:
 
             elif words[0] == "[CONTROLLER]:":
                 words.pop(0)
+                self.t.append(float(words[0]))
+                self.u.append(float(words[1]))
+                self.measured.append(float(words[2]))
+                self.target.append(float(words[3]))
+
                 self.plot_socket.sendto(" ".join(words).encode(), (IP, PORT))
 
             else:
@@ -101,6 +111,11 @@ class Interface:
     def on_exit(self):
         self.port.close()
         self.gen_plots()
+
+        np.save("logs/t.npy", self.t)
+        np.save("logs/u.npy", self.u)
+        np.save("logs/measured.npy", self.measured)
+        np.save("logs/target.npy", self.target)
 
         self.info_file.close()
         self.warning_file.close()
