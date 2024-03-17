@@ -10,6 +10,7 @@ import socket
 
 from plot import IP, PORT
 
+# Flags for controlling the verbosity of the logger
 ERROR = True
 WARNINGS = True
 INFO = True
@@ -18,24 +19,27 @@ START_TIME = int(round(time.time() * 1000))
 
 
 def get_time_ms():
+    """Return the current time in milliseconds since the start of the program."""
     return str(int(round(time.time() * 1000)) - START_TIME)
 
 
 class Interface:
     def __init__(self, serial_port):
-        self.port = serial.Serial(serial_port, 115200)
+        self.port = serial.Serial(serial_port, 115200)  # Init serial port
+
+        # Start a thread to read the serial port
         self.receive_thread = threading.Thread(target=self.read_serial)
-        self.receive_thread.daemon = (
-            True  # Daemonize the thread to close with main thread
-        )
+        self.receive_thread.daemon = True
         self.receive_thread.start()
-        self.values = {}
+
+        self.values = {}  # Store the values received from VALUE message
 
         self.t = []
         self.u = []
         self.measured = []
         self.target = []
 
+        # Open log files
         self.info_file = open("logs/info.log", "w")
         self.warning_file = open("logs/warning.log", "w")
         self.error_file = open("logs/error.log", "w")
@@ -43,7 +47,9 @@ class Interface:
         self.plot_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     def read_serial(self):
+        """Read the serial port and process the messages."""
         while True:
+            # Reade and decode the serial port
             data = self.port.readline().decode().replace("\n", "")
             words = data.split()
 
@@ -90,9 +96,13 @@ class Interface:
                 print(data)
 
     def send_message(self, message):
+        """Send a message to the serial port."""
         self.port.write(message.encode())
 
     def gen_plots(self):
+        """Generate and save plots for the values received."""
+
+        # Saving the values as plots and numpy arrays
         for key, value_list in self.values.items():
             try:
                 numeric_values = [float(value) for value in value_list]
@@ -104,11 +114,14 @@ class Interface:
                 plt.savefig(f"plots/{key}.png")  # Save the plot as a PNG file
                 plt.close()
 
+                # Save the values as a numpy array
                 np.save(f"logs/{key}.npy", numeric_values)
             except ValueError as e:
                 print(f"Error converting values for {key}: {e}")
 
     def on_exit(self):
+        """Called on exit."""
+
         self.port.close()
         self.gen_plots()
 

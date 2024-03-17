@@ -13,8 +13,8 @@ class Plot:
     def __init__(self):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server_socket.bind((IP, PORT))
-        # self.server_socket.setblocking(0)  # Non-blocking socket
 
+        # Init the axis
         self.t = [0 for _ in range(X_LIM)]
         self.u = [0 for _ in range(X_LIM)]
         self.ref = [0 for _ in range(X_LIM)]
@@ -37,6 +37,7 @@ class Plot:
         plt.show()
 
     def init_plot(self):
+        """Init the plot with the initial data."""
         self.ax1.set_ylim(0, 500)
         self.ax1.grid()
         self.ax1.legend(["Target", "Measured"])
@@ -48,6 +49,7 @@ class Plot:
         return self.line1, self.line2, self.line3
 
     def update_plot(self, frame):
+        """Update the plot with the new data."""
         if len(self.t) > X_LIM:
             self.ax1.set_xlim(self.t[-X_LIM], self.t[-1])
             self.ax2.set_xlim(self.t[-X_LIM], self.t[-1])
@@ -59,6 +61,7 @@ class Plot:
         return self.line1, self.line2, self.line3
 
     def read_socket(self):
+        """Read the socket and process the messages."""
         while True:
             msg, _ = self.server_socket.recvfrom(1024)
             msg = msg.decode()

@@ -1,0 +1,27 @@
+[11505]: recived msg -> g x 0
+[11506]: Pushing cmd to fifo0
+[11506]: Luminaire command received
+[22702]: recived msg -> g t 0
+[22702]: Pushing cmd to fifo0
+[22702]: Monitor command received
+[74824]: recived msg -> g p 0
+[74825]: Pushing cmd to fifo0
+[74825]: Monitor command received
+[83177]: recived msg -> g p 0
+[83177]: Pushing cmd to fifo0[CONTROLLER]: 99238 2977 249 250.000000
+[83178]: Monitor command received
+[101423]: recived msg -> s l 0
+[101424]: Pushing cmd to fifo0
+[101424]: Monitor command received
+[109864]: recived msg -> S l 0
+[109865]: Pushing cmd to fifo0
+[109865]: Monitor command received
+[121735]: recived msg -> s d 0
+[121736]: Pushing cmd to fifo0
+[121738]: Monitor command received
+[131698]: recived msg -> x d 0
+[135999]: recived msg -> S d 0
+[135999]: Pushing cmd to fifo0
+[135999]: Monitor command received
+[143740]: recived msg -> x l 0
+[155868]: recived msg -> g b l 0

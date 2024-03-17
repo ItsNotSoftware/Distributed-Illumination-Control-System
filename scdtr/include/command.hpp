@@ -29,6 +29,11 @@ struct MonitorCmd {
 
 typedef std::variant<LuminaireCmd, MonitorCmd> Command;
 
+/*
+ * Handle the command
+ *
+ * @param command The command to be handled
+ */
 void command_handle(Command &command);
 
 #endif
