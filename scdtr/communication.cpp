@@ -219,9 +219,9 @@ void process_input(std::vector<std::string> &args) {
                     break;
 
                 case 'b':  // Buffer
-                    CHECK_ID(args[2]);
+                    CHECK_ID(args[3]);
 
-                    cmd = MonitorCmd{.monitor = Monitor::BUFFER, .variable = 0};
+                    cmd = MonitorCmd{.monitor = Monitor::BUFFER, .variable = args[2][0]};
                     break;
 
                 case 'e':  // Avg power consumption

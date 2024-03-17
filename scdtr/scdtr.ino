@@ -100,8 +100,7 @@ void loop() {
             uint16_t u = controller.compute_pwm_signal(mv, curr_time);
             led.set_pwm_range(u);
 
-            LOGGER_SEND_CONTROLLER_DATA(curr_time, u, mv, controller.get_target());
-            // LOGGER_SEND_VAL("lux", lux);
+            // LOGGER_SEND_CONTROLLER_DATA(curr_time, u, mv, controller.get_target());
 
             lux_buffer.push(lux);
             dutycycle_buffer.push((float)u / DAC_RANGE);

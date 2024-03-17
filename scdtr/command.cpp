@@ -215,6 +215,7 @@ void process_monitor_cmd(MonitorCmd& cmd) {
             break;
 
         case Monitor::BUFFER:
+
             if (cmd.variable == 'l') {
                 response = "b l " + id_str + lux_buffer.to_str();
                 Serial.println(response.c_str());
