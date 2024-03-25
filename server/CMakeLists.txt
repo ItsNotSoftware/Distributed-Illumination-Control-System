@@ -5,6 +5,11 @@ project(UdpSerialServer)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+
 # Find Boost package
 find_package(Boost 1.55.0 REQUIRED COMPONENTS system)
 

@@ -1,0 +1,9 @@
+# ninja log v5
+0	226	1711403068017302945	interface_autogen/timestamp	f6892efe9c61cfca
+1118	1366	1711403069158601207	interface.app/Contents/MacOS/interface	9a8b67436280f5c6
+0	226	1711403068017302945	interface_autogen/mocs_compilation.cpp	f6892efe9c61cfca
+0	226	1711403068017302945	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/build-interface-Qt_6_6_2_for_macOS-Debug/interface_autogen/timestamp	f6892efe9c61cfca
+0	226	1711403068017302945	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/build-interface-Qt_6_6_2_for_macOS-Debug/interface_autogen/mocs_compilation.cpp	f6892efe9c61cfca
+226	1118	1711403068909656893	CMakeFiles/interface.dir/mainwindow.cpp.o	ef66bddf80fa184
+226	1113	1711403068902304831	CMakeFiles/interface.dir/interface_autogen/mocs_compilation.cpp.o	4ca3ec151b4d470
+226	1116	1711403068902304623	CMakeFiles/interface.dir/main.cpp.o	5a5a579af032ad33
