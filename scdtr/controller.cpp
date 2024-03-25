@@ -65,8 +65,8 @@ uint16_t Controller::compute_pwm_signal(float y, uint32_t current_time) {
             pwm_signal = DAC_RANGE;
             integral -= integral_error * dt;
         } else if (pwm_signal <= 0.0) {
-            pwm_signal -= integral_error * dt;
-            integral = 0;
+            pwm_signal = 0;
+            integral -= integral_error * dt;
         }
     } else {
         // clamp the pwm signal

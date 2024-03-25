@@ -11,8 +11,8 @@
 #include "include/thread_safe_fifo.hpp"
 #include "pico/stdlib.h"
 
-#define SEND_CAN 0
-#define RCV_CAN 1
+#define SEND_CAN_TEST 0
+#define RCV_CAN_TEST 0
 
 constexpr uint32_t CONTROLLER_INTERVAL = 10;  // ms
 constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms
@@ -20,13 +20,13 @@ constexpr uint32_t ADC_SAMPLE_INTERVAL = 1;   // ms
 Luxmeter luxmeter(A0);
 LED led(15);
 
-Controller controller(8, 0.12, 60, 1, 1, 250);
+Controller controller(4.5, 0.09, 0, 1, 1, 250);
 bool contoller_active = true;
 
 RingBuffer<float, 100> lux_buffer;
 RingBuffer<float, 100> dutycycle_buffer;
 
-bool steam_lux = false;
+bool stream_lux = false;
 bool stream_dutycycle = false;
 
 ThreadSafeFifo<Command> fifo0;  // FIFO for IPC
@@ -72,7 +72,7 @@ inline void stream() {
 
         Serial.println(msg.c_str());
     }
-    if (steam_lux) {
+    if (stream_lux) {
         std::string msg = "s l " + std::to_string(id) + ' ' + std::to_string(lux_buffer.pop()) +
                           ' ' + std::to_string(curr_time);
 
@@ -93,17 +93,17 @@ void loop() {
     if (curr_time - prev_controller_t >= CONTROLLER_INTERVAL) {
         prev_controller_t = curr_time;
 
-        float mv = luxmeter.get_mv();
+        uint16_t mv = luxmeter.get_mv();
         float lux = luxmeter.mv_to_lux(mv);
 
         if (contoller_active) {
             uint16_t u = controller.compute_pwm_signal(mv, curr_time);
             led.set_pwm_range(u);
 
-            LOGGER_SEND_CONTROLLER_DATA(curr_time, u, mv, controller.get_target());
+            // LOGGER_SEND_CONTROLLER_DATA(curr_time, u, mv, controller.get_target());
 
             lux_buffer.push(lux);
-            dutycycle_buffer.push(u / DAC_RANGE);
+            dutycycle_buffer.push((float)u / DAC_RANGE);
 
             stream();
         }
@@ -126,14 +126,16 @@ void loop() {
 
 /**
  * [Core #1 loop]:
- *      Task1 -> CAN  communication (if msg is recived).
- *      Task2 -> Serial communication (if msg is recived).
+ *      Task1 -> Serial communication (if msg is recived).
+ *      Task2 -> CAN  communication (if msg is recived).
  */
 void loop1() {
     USB::handle();
 
-#if RCV_CAN
+#if RCV_CAN_TEST  // Test if the can bus is working
     if (can_handler.receive_msg(can_msg)) {
+        uint32_t b = micros();
+
         std::string msg = "can -> " + std::to_string(can_msg.can_id) + ' ' +
                           std::to_string(can_msg.data[0]) + ' ' + std::to_string(can_msg.data[1]) +
                           ' ' + std::to_string(can_msg.data[2]) + ' ' +
@@ -141,15 +143,27 @@ void loop1() {
                           ' ' + std::to_string(can_msg.data[5]) + ' ' +
                           std::to_string(can_msg.data[6]) + ' ' + std::to_string(can_msg.data[7]);
         LOGGER_SEND_INFO(msg.c_str());
+
+        LOGGER_SEND_VAL("can_rcv", micros() - b);
     }
 #endif
 
-#if SEND_CAN
+#if SEND_CAN_TEST
+    uint32_t a = micros();
 
-    if (curr_time % 500 == 0) {
-        can_frame msg = {0x123, 8, {0, 1, 2, 3, 4, 5, 6, 7}};
-        can_handler.send_msg(msg);
-    }
+    can_msg.can_id = 0x123;
+    can_msg.can_dlc = 8;
+    can_msg.data[0] = 0x12;
+    can_msg.data[1] = 0x34;
+    can_msg.data[2] = 0x56;
+    can_msg.data[3] = 0x78;
+    can_msg.data[4] = 0x9A;
+    can_msg.data[5] = 0xBC;
+    can_msg.data[6] = 0xDE;
+    can_msg.data[7] = 0xF0;
 
+    can_handler.send_msg(can_msg);
+
+    LOGGER_SEND_VAL("can_send", micros() - a);
 #endif
 }
