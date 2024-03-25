@@ -1,1 +1,13 @@
-[30274]: recived msg -> g b l 0
+[4788]: recived msg -> s l 0
+[4789]: Pushing cmd to fifo0
+[4790]: Monitor command received
+[15462]: recived msg -> S l 0S l 0
+[20727]: recived msg -> S l 0
+[20728]: Pushing cmd to fifo0
+[20728]: Monitor command received
+[24995]: recived msg -> s d  0
+[24996]: Pushing cmd to fifo0
+[24996]: Monitor command received
+[30427]: recived msg -> S d 0
+[30428]: Pushing cmd to fifo0
+[30428]: Monitor command received
