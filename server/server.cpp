@@ -17,6 +17,12 @@ using boost::asio::ip::tcp, std::cout, std::endl;
 /* TCP <-> Serial bridge */
 class TcpSerialServer {
    public:
+    /*
+     * Constructor
+     * @param io_context: boost::asio::io_context object
+     * @param serial_port: Serial port name
+     * @return: None
+     */
     TcpSerialServer(boost::asio::io_context& io_context, const std::string& serial_port)
         : io_context_(io_context),
           acceptor_(io_context, tcp::endpoint(tcp::v4(), PORT)),
@@ -36,6 +42,10 @@ class TcpSerialServer {
     std::array<char, 1024> tcp_rcv_buffer_;
     std::array<char, 1024> serial_rcv_buffer_;
 
+    /*
+     * Setup serial port
+     * @return: None
+     */
     void setup_serial() {
         serial_.set_option(boost::asio::serial_port_base::baud_rate(9600));
         serial_.set_option(boost::asio::serial_port_base::character_size(8));
@@ -45,6 +55,10 @@ class TcpSerialServer {
             boost::asio::serial_port_base::stop_bits::one));
     }
 
+    /*
+     * Start accepting new connections
+     * @return: None
+     */
     void start_accept() {
         acceptor_.async_accept(socket_, [this](boost::system::error_code ec) {
             if (!ec) {
@@ -54,6 +68,10 @@ class TcpSerialServer {
         });
     }
 
+    /*
+     * Start receiving data from TCP socket
+     * @return: None
+     */
     void tcp_start_receive() {
         socket_.async_read_some(
             boost::asio::buffer(tcp_rcv_buffer_),
@@ -67,6 +85,10 @@ class TcpSerialServer {
             });
     }
 
+    /*
+     * Start receiving data from serial port
+     * @return: None
+     */
     void serial_start_receive() {
         serial_.async_read_some(
             boost::asio::buffer(serial_rcv_buffer_),
@@ -80,11 +102,21 @@ class TcpSerialServer {
             });
     }
 
+    /*
+     * Send data to serial port
+     * @param message: Message to send
+     * @return: None
+     */
     void serial_send(const std::string& message) {
         boost::asio::async_write(serial_, boost::asio::buffer(message),
                                  [](boost::system::error_code, std::size_t) {});
     }
 
+    /*
+     * Send data to TCP socket
+     * @param message: Message to send
+     * @return: None
+     */
     void tcp_send(const std::string& message) {
         boost::asio::async_write(socket_, boost::asio::buffer(message),
                                  [](boost::system::error_code, std::size_t) {});

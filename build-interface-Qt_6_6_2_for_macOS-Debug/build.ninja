@@ -73,9 +73,9 @@ build CMakeFiles/interface.dir/mainwindow.cpp.o: CXX_COMPILER__interface_unscann
   OBJECT_DIR = CMakeFiles/interface.dir
   OBJECT_FILE_DIR = CMakeFiles/interface.dir
 
-build CMakeFiles/interface.dir/UdpClient.cpp.o: CXX_COMPILER__interface_unscanned_Debug /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/interface/UdpClient.cpp || cmake_object_order_depends_target_interface
+build CMakeFiles/interface.dir/TcpClient.cpp.o: CXX_COMPILER__interface_unscanned_Debug /Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/interface/TcpClient.cpp || cmake_object_order_depends_target_interface
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/interface.dir/UdpClient.cpp.o.d
+  DEP_FILE = CMakeFiles/interface.dir/TcpClient.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.2 -fcolor-diagnostics
   INCLUDES = -I/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/build-interface-Qt_6_6_2_for_macOS-Debug/interface_autogen/include -isystem /Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Headers -iframework /Users/diogoferreira/Qt/6.6.2/macos/lib -isystem /Users/diogoferreira/Qt/6.6.2/macos/mkspecs/macx-clang -isystem /Users/diogoferreira/Qt/6.6.2/macos/include -isystem /Users/diogoferreira/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -isystem /Users/diogoferreira/Qt/6.6.2/macos/lib/QtGui.framework/Headers -isystem /Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Headers
   OBJECT_DIR = CMakeFiles/interface.dir
@@ -89,7 +89,7 @@ build CMakeFiles/interface.dir/UdpClient.cpp.o: CXX_COMPILER__interface_unscanne
 #############################################
 # Link the executable interface.app/Contents/MacOS/interface
 
-build interface.app/Contents/MacOS/interface: CXX_EXECUTABLE_LINKER__interface_Debug CMakeFiles/interface.dir/interface_autogen/mocs_compilation.cpp.o CMakeFiles/interface.dir/main.cpp.o CMakeFiles/interface.dir/mainwindow.cpp.o CMakeFiles/interface.dir/UdpClient.cpp.o | /Users/diogoferreira/Qt/6.6.2/macos/lib/QtWidgets.framework/Versions/A/QtWidgets /Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/QtNetwork /Users/diogoferreira/Qt/6.6.2/macos/lib/QtGui.framework/Versions/A/QtGui /Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/QtCore || interface_autogen interface_autogen_timestamp_deps
+build interface.app/Contents/MacOS/interface: CXX_EXECUTABLE_LINKER__interface_Debug CMakeFiles/interface.dir/interface_autogen/mocs_compilation.cpp.o CMakeFiles/interface.dir/main.cpp.o CMakeFiles/interface.dir/mainwindow.cpp.o CMakeFiles/interface.dir/TcpClient.cpp.o | /Users/diogoferreira/Qt/6.6.2/macos/lib/QtWidgets.framework/Versions/A/QtWidgets /Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/QtNetwork /Users/diogoferreira/Qt/6.6.2/macos/lib/QtGui.framework/Versions/A/QtGui /Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/QtCore || interface_autogen interface_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.2
   LINK_LIBRARIES = -Wl,-rpath,/Users/diogoferreira/Qt/6.6.2/macos/lib  /Users/diogoferreira/Qt/6.6.2/macos/lib/QtWidgets.framework/Versions/A/QtWidgets  /Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/QtNetwork  /Users/diogoferreira/Qt/6.6.2/macos/lib/QtGui.framework/Versions/A/QtGui  -Xlinker -framework -Xlinker OpenGL  -Xlinker -framework -Xlinker AGL  -framework AppKit  -framework ImageIO  -framework Metal  /Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/QtCore  -framework IOKit  -framework DiskArbitration
   LINK_PATH = -iframework /Users/diogoferreira/Qt/6.6.2/macos/lib
@@ -191,7 +191,7 @@ build interface_autogen/timestamp interface_autogen/mocs_compilation.cpp | ${cma
 #############################################
 # Phony custom command for CMakeFiles/interface_autogen_timestamp_deps
 
-build CMakeFiles/interface_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/interface_autogen_timestamp_deps: phony /Users/diogoferreira/Qt/6.6.2/macos/./libexec/moc /Users/diogoferreira/Qt/6.6.2/macos/lib/QtWidgets.framework/Versions/A/QtWidgets /Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/QtNetwork /Users/diogoferreira/Qt/6.6.2/macos/./libexec/uic /Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/QtCore
+build CMakeFiles/interface_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/interface_autogen_timestamp_deps: phony /Users/diogoferreira/Qt/6.6.2/macos/./libexec/uic /Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/QtCore /Users/diogoferreira/Qt/6.6.2/macos/./libexec/moc /Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/QtNetwork /Users/diogoferreira/Qt/6.6.2/macos/lib/QtWidgets.framework/Versions/A/QtWidgets
 
 
 #############################################

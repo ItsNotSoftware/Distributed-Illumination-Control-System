@@ -95,9 +95,12 @@ interface_autogen/timestamp: \
 	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/build-interface-Qt_6_6_2_for_macOS-Debug/CMakeFiles/3.27.7/CMakeSystem.cmake \
 	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/build-interface-Qt_6_6_2_for_macOS-Debug/interface_autogen/moc_predefs.h \
 	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/interface/CMakeLists.txt \
+	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/interface/TcpClient.cpp \
+	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/interface/TcpClient.hpp \
 	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/interface/main.cpp \
 	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/interface/mainwindow.cpp \
 	/Users/diogoferreira/CodeWs/Distributed-Illumination-Control-System/interface/mainwindow.hpp \
+	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/QObject \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/q20functional.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/q20memory.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/q20type_traits.h \
@@ -140,6 +143,7 @@ interface_autogen/timestamp: \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/qglobalstatic.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/qhash.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/qhashfunctions.h \
+	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/qiodevice.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/qiodevicebase.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/qiterable.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtCore.framework/Versions/A/Headers/qiterator.h \
@@ -235,6 +239,13 @@ interface_autogen/timestamp: \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtGui.framework/Versions/A/Headers/qtguiglobal.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtGui.framework/Versions/A/Headers/qtransform.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtGui.framework/Versions/A/Headers/qwindowdefs.h \
+	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/Headers/QTcpSocket \
+	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/Headers/qabstractsocket.h \
+	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/Headers/qhostaddress.h \
+	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/Headers/qtcpsocket.h \
+	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/Headers/qtnetwork-config.h \
+	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/Headers/qtnetworkexports.h \
+	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtNetwork.framework/Versions/A/Headers/qtnetworkglobal.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtWidgets.framework/Versions/A/Headers/QMainWindow \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtWidgets.framework/Versions/A/Headers/qmainwindow.h \
 	/Users/diogoferreira/Qt/6.6.2/macos/lib/QtWidgets.framework/Versions/A/Headers/qsizepolicy.h \
