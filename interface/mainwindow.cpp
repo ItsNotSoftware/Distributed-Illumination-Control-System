@@ -45,11 +45,13 @@ void MainWindow::on_btnConnect_clicked() {
 void MainWindow::device_connected() {
     ui->lstConsole->addItem("Connected to Server");
     ui->btnConnect->setText("Disconnect");
+    ui->grpSendCmd->setEnabled(true);
 }
 
 void MainWindow::device_disconnected() {
     ui->lstConsole->addItem("Disconnected form Server");
     ui->btnConnect->setText("Connect");
+    ui->grpSendCmd->setEnabled(false);
 }
 
 void MainWindow::device_stateChanged(QAbstractSocket::SocketState state) {
@@ -137,6 +139,10 @@ void MainWindow::device_errorOccurred(QAbstractSocket::SocketError error) {
     ui->lstConsole->addItem(str);
 }
 
+void MainWindow::device_dataReady(QByteArray data) {
+    ui->lstConsole->addItem(QString(data));
+}
+
 void MainWindow::setup_TcpClient() {
     // Connect signals of QTcpSocket to this class
     connect(&_client, &TcpClient::connected, this,
@@ -147,4 +153,11 @@ void MainWindow::setup_TcpClient() {
             &MainWindow::device_stateChanged);
     connect(&_client, &TcpClient::errorOccurred, this,
             &MainWindow::device_errorOccurred);
+    connect(&_client, &TcpClient::data_ready, this,
+            &MainWindow::device_dataReady);
+}
+
+void MainWindow::on_btnSendCmd_clicked() {
+    auto msg = ui->lnSendCmd->text().trimmed();
+    _client.send(msg);
 }

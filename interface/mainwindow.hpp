@@ -29,6 +29,9 @@ class MainWindow : public QMainWindow {
     void device_disconnected();
     void device_stateChanged(QAbstractSocket::SocketState);
     void device_errorOccurred(QAbstractSocket::SocketError);
+    void device_dataReady(QByteArray data);
+
+    void on_btnSendCmd_clicked();
 
    private:
     Ui::MainWindow *ui;

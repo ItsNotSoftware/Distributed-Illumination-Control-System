@@ -9,6 +9,8 @@ TcpClient::TcpClient(QObject *parent) : QObject{parent} {
             &TcpClient::socket_stateChanged);
     connect(&_socket, &QTcpSocket::errorOccurred, this,
             &TcpClient::errorOccurred);
+    connect(&_socket, &QTcpSocket::readyRead, this,
+            &TcpClient::socket_readyRead);
 }
 
 void TcpClient::connect_to_server(QString ip, int port) {
@@ -29,6 +31,8 @@ void TcpClient::close_connection() {
     _socket.close();
 }
 
+void TcpClient::send(QString msg) { _socket.write(msg.toUtf8()); }
+
 bool TcpClient::is_connected() {
     return _socket.state() == QAbstractSocket::ConnectedState;
 }
@@ -39,4 +43,9 @@ void TcpClient::socket_stateChanged(QAbstractSocket::SocketState state) {
     }
 
     emit stateChanged(state);
+}
+
+void TcpClient::socket_readyRead() {
+    auto data = _socket.readAll();
+    emit data_ready(data);
 }

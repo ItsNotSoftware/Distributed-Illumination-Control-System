@@ -14,6 +14,7 @@ class TcpClient : public QObject {
     explicit TcpClient(QObject *parent = nullptr);
     void connect_to_server(QString ip, int port);
     void close_connection();
+    void send(QString msg);
     bool is_connected();
     QAbstractSocket::SocketState state();
 
@@ -22,9 +23,11 @@ class TcpClient : public QObject {
     void disconnected();
     void stateChanged(QAbstractSocket::SocketState);
     void errorOccurred(QAbstractSocket::SocketError);
+    void data_ready(QByteArray);
 
    private slots:
     void socket_stateChanged(QAbstractSocket::SocketState state);
+    void socket_readyRead();
 
    private:
     QTcpSocket _socket;
