@@ -1,7 +1,6 @@
 #include <array>
 #include <boost/asio.hpp>
 #include <boost/asio/serial_port.hpp>
-#include <ctime>
 #include <functional>
 #include <iostream>
 #include <memory>
@@ -9,47 +8,43 @@
 
 // Set to false to disable console echo
 constexpr bool ECHO_SERIAL = true;
-constexpr bool ECHO_UDP = true;
+constexpr bool ECHO_TCP = true;
 
 constexpr unsigned short PORT = 8080;
 
-using boost::asio::ip::udp, std::cout, std::endl;
+using boost::asio::ip::tcp, std::cout, std::endl;
 
-/* UDP <-> Serial bridge */
-class UdpSerialServer {
+/* TCP <-> Serial bridge */
+class TcpSerialServer {
    public:
     /*
-     * Constructor to start the server and bind to the given serial port
-     *
-     * @param io_context: The boost::asio::io_context to use
-     * @param serial_port: The serial port to bind to
+     * Constructor
+     * @param io_context: boost::asio::io_context object
+     * @param serial_port: Serial port name
+     * @return: None
      */
-    UdpSerialServer(boost::asio::io_context& io_context, const std::string& serial_port)
+    TcpSerialServer(boost::asio::io_context& io_context, const std::string& serial_port)
         : io_context_(io_context),
-          socket_(io_context, udp::endpoint(udp::v4(), PORT)),
+          acceptor_(io_context, tcp::endpoint(tcp::v4(), PORT)),
+          socket_(io_context),
           serial_(io_context, serial_port) {
         cout << "Server started at port " << PORT << endl;
         setup_serial();
-        udp_start_receive();
+        start_accept();
         serial_start_receive();
     }
 
    private:
     boost::asio::io_context& io_context_;
-    udp::socket socket_;
-    udp::endpoint remote_endpoint_;
+    tcp::acceptor acceptor_;
+    tcp::socket socket_;
     boost::asio::serial_port serial_;
-
-    // Buffers for receiving data
-    std::array<char, 1024> sock_rcv_buffer_;
+    std::array<char, 1024> tcp_rcv_buffer_;
     std::array<char, 1024> serial_rcv_buffer_;
 
     /*
-     * Setup the serial port with the following settings:
-     * - Baud rate: 9600
-     * - Character size: 8
-     * - Parity: None
-     * - Stop bits: 1
+     * Setup serial port
+     * @return: None
      */
     void setup_serial() {
         serial_.set_option(boost::asio::serial_port_base::baud_rate(9600));
@@ -61,104 +56,74 @@ class UdpSerialServer {
     }
 
     /*
-     * Start receiving UDP messages
+     * Start accepting new connections
+     * @return: None
      */
-    void udp_start_receive() {
-        socket_.async_receive_from(
-            boost::asio::buffer(sock_rcv_buffer_), remote_endpoint_,
-            std::bind(&UdpSerialServer::udp_receive_handler, this, boost::asio::placeholders::error,
-                      boost::asio::placeholders::bytes_transferred));
+    void start_accept() {
+        acceptor_.async_accept(socket_, [this](boost::system::error_code ec) {
+            if (!ec) {
+                tcp_start_receive();
+            }
+            start_accept();  // Listen for new connections
+        });
     }
 
     /*
-     * Handle received UDP messages
-     *
-     * @param error: The error code
-     * @param bytes_transferred: The number of bytes transferred
+     * Start receiving data from TCP socket
+     * @return: None
      */
-    void udp_receive_handler(const boost::system::error_code& error,
-                             std::size_t bytes_transferred) {
-        if (!error) {
-            std::string received_message(sock_rcv_buffer_.data(), bytes_transferred);
-
-            if constexpr (ECHO_UDP) cout << "[UDP]: " << received_message << endl;
-
-            // Send received UDP message to serial
-            serial_send(received_message);
-
-            udp_start_receive();
-        }
+    void tcp_start_receive() {
+        socket_.async_read_some(
+            boost::asio::buffer(tcp_rcv_buffer_),
+            [this](boost::system::error_code ec, std::size_t bytes_transferred) {
+                if (!ec) {
+                    std::string received_message(tcp_rcv_buffer_.data(), bytes_transferred);
+                    if constexpr (ECHO_TCP) cout << "[TCP]: " << received_message << endl;
+                    serial_send(received_message);
+                    tcp_start_receive();
+                }
+            });
     }
 
     /*
-     * Start receiving serial messages
+     * Start receiving data from serial port
+     * @return: None
      */
     void serial_start_receive() {
-        serial_.async_read_some(boost::asio::buffer(serial_rcv_buffer_),
-                                std::bind(&UdpSerialServer::serial_receive_handler, this,
-                                          boost::asio::placeholders::error,
-                                          boost::asio::placeholders::bytes_transferred));
+        serial_.async_read_some(
+            boost::asio::buffer(serial_rcv_buffer_),
+            [this](boost::system::error_code ec, std::size_t bytes_transferred) {
+                if (!ec) {
+                    std::string received_message(serial_rcv_buffer_.data(), bytes_transferred);
+                    if constexpr (ECHO_SERIAL) cout << "[SERIAL]: " << received_message << endl;
+                    tcp_send(received_message);
+                    serial_start_receive();
+                }
+            });
     }
 
     /*
-     * Handle received serial messages
-     *
-     * @param error: The error code
-     * @param bytes_transferred: The number of bytes transferred
-     */
-    void serial_receive_handler(const boost::system::error_code& error,
-                                std::size_t bytes_transferred) {
-        if (!error) {
-            std::string received_message(serial_rcv_buffer_.data(), bytes_transferred);
-
-            if constexpr (ECHO_SERIAL) cout << "[SERIAL]: " << received_message << endl;
-
-            // Send received serial message over UDP
-            udp_send(received_message);
-
-            serial_start_receive();
-        }
-    }
-
-    /*
-     * Send a message over the serial port
-     *
-     * @param message: The message to send
+     * Send data to serial port
+     * @param message: Message to send
+     * @return: None
      */
     void serial_send(const std::string& message) {
         boost::asio::async_write(serial_, boost::asio::buffer(message),
-                                 [](const boost::system::error_code&, std::size_t) {});
+                                 [](boost::system::error_code, std::size_t) {});
     }
 
     /*
-     * Send a message over UDP
-     *
-     * @param message: The message to send
+     * Send data to TCP socket
+     * @param message: Message to send
+     * @return: None
      */
-    void udp_send(const std::string& message) {
-        auto message_to_send = std::make_shared<std::string>(message);
-
-        socket_.async_send_to(boost::asio::buffer(*message_to_send), remote_endpoint_,
-                              [this, message_to_send](const boost::system::error_code& error,
-                                                      std::size_t bytes_transferred) {
-                                  this->udp_send_handler(message_to_send, error, bytes_transferred);
-                              });
+    void tcp_send(const std::string& message) {
+        boost::asio::async_write(socket_, boost::asio::buffer(message),
+                                 [](boost::system::error_code, std::size_t) {});
     }
-
-    /*
-     * Handle the result of sending a message over UDP
-     *
-     * @param message: The message to send
-     * @param error: The error code
-     * @param bytes_transferred: The number of bytes transferred
-     */
-    void udp_send_handler(std::shared_ptr<std::string> /*message*/,
-                          const boost::system::error_code& /*error*/,
-                          std::size_t /*bytes_transferred*/) {}
 };
 
 int main(int argc, char* argv[]) {
-    // Check for correct number of arguments
     if (argc != 2) {
         std::cerr << "Usage: server <serial_port>" << endl;
         return 1;
@@ -166,10 +131,11 @@ int main(int argc, char* argv[]) {
 
     try {
         boost::asio::io_context io_context;
-        UdpSerialServer server(io_context, argv[1]);
+        TcpSerialServer server(io_context, argv[1]);
         io_context.run();
     } catch (std::exception& e) {
         std::cerr << e.what() << endl;
+        return 1;
     }
 
     return 0;
